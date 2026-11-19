@@ -1,0 +1,51 @@
+{
+  "mode": "ascent",
+  "counted_starts": 181164464,
+  "retained_endpoints": 96,
+  "counts": {
+    "near_flat": 181164464
+  },
+  "retained_statuses": {
+    "near_flat": 96
+  },
+  "aggregate_extrema": {
+    "near_flat": {
+      "L": {
+        "min": 11.180339887480487,
+        "max": 11.180339887499068
+      },
+      "flat_error": {
+        "min": 3.7758685067501574e-13,
+        "max": 9.99999997253198e-07
+      },
+      "gradient": {
+        "min": 1.095824874993725e-12,
+        "max": 8.638217112627826e-06
+      },
+      "min_modulus": {
+        "min": 0.44721259549999076,
+        "max": 0.4472135954997127
+      },
+      "raw_flat_error": {
+        "min": 3.7758685067501574e-13,
+        "max": 9.99999997253198e-07
+      },
+      "raw_gradient": {
+        "min": 1.095824874993725e-12,
+        "max": 8.638217112627826e-06
+      },
+      "unitarity_error": {
+        "min": 4.778525599297462e-16,
+        "max": 5.2252597009064117e-14
+      }
+    }
+  },
+  "retained_unresolved_geodesic_curvature": null,
+  "spectrum_pairs_checked": 0,
+  "all_flags_retained": 0,
+  "max_scalar_discrepancy": 1.1433462164862895e-16,
+  "max_spectrum_discrepancy": 0.0,
+  "max_witness_discrepancy": 0.0,
+  "source_sha256": "81b895a0da1f2ae8f789e6c9765efcd93895245e203a47a402020777759930e5",
+  "result": "passed"
+}

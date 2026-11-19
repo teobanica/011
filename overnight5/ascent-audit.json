@@ -1,0 +1,12 @@
+{
+  "mode": "ascent",
+  "counted_starts": 593024,
+  "retained_endpoints": 96,
+  "spectrum_pairs_checked": 0,
+  "all_flags_retained": 0,
+  "max_scalar_discrepancy": 0.0,
+  "max_spectrum_discrepancy": 0.0,
+  "max_witness_discrepancy": 0.0,
+  "source_sha256": "81b895a0da1f2ae8f789e6c9765efcd93895245e203a47a402020777759930e5",
+  "result": "passed"
+}

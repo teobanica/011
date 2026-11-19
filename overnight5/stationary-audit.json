@@ -1,0 +1,12 @@
+{
+  "mode": "stationary",
+  "counted_starts": 105248,
+  "retained_endpoints": 999,
+  "spectrum_pairs_checked": 451,
+  "all_flags_retained": 0,
+  "max_scalar_discrepancy": 0.0,
+  "max_spectrum_discrepancy": 0.0,
+  "max_witness_discrepancy": 1.5987211554602254e-14,
+  "source_sha256": "189951c6b9ea172a8cec0f29fd353234a247df942bd691104e9b9a7f99ddd659",
+  "result": "passed"
+}
