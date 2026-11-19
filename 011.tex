@@ -1,0 +1,2186 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor,lmodern,microtype,amsmath,amssymb,amsthm,booktabs}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=magenta,urlcolor=black]{hyperref}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem*{introconj}{Conjecture}
+\newtheorem{introthm}{Theorem}
+\renewcommand{\theintrothm}{\Alph{introthm}}
+\setlength{\parskip}{1pt}
+\linespread{0.99}
+\setlength{\emergencystretch}{2em}
+\setcounter{tocdepth}{1}
+\raggedbottom
+\title{Numerical evidence for the almost Hadamard conjecture}
+\author{Chat, Grok and Teo}
+\date{}
+\hypersetup{pdftitle={Numerical evidence for the almost Hadamard conjecture},pdfauthor={Chat, Grok and Teo}}
+\begin{document}
+\maketitle
+\begin{abstract}
+We report on encouraging numerical evidence for the almost Hadamard conjecture, stating that any local maximizer of the $1$-norm on $U_N$ must have all entries of modulus $1/\sqrt{N}$, or equivalently that every complex almost Hadamard matrix $H=\sqrt{N}\,U$ must be a complex Hadamard matrix, with computations at the key values $N=4,5$ arising from our attempts to both prove and disprove the conjecture, and adding to the previous abstract evidence.
+\end{abstract}
+\begingroup
+\color{magenta}\hypersetup{linkcolor=magenta}
+\setlength{\parskip}{0pt}
+\renewcommand{\addvspace}[1]{\vspace{3pt}}
+\tableofcontents
+\endgroup
+\section*{Introduction}
+\phantomsection\addcontentsline{toc}{section}{Introduction}
+A complex Hadamard matrix is a square matrix whose entries have modulus
+1 and whose rows are orthogonal:
+\[
+ |H_{ij}|=1,\qquad HH^*=NI
+\]
+Its rescaling $U=H/\sqrt N$ is a flat unitary, meaning that all its
+entries have modulus $1/\sqrt{N}$. These matrices attain the upper bound
+\[
+ L(U)=\|U\|=\sum_{ij}|U_{ij}|\le N\sqrt N
+\]
+The following conjecture was made in \cite{BN}.
+
+\begin{introconj}[Almost Hadamard, AHC]
+Every local maximizer of the $1$-norm on $U_N$ attains the bound
+$N\sqrt N$.
+\end{introconj}
+
+The starting point was the real theory \cite{BCS,BNZ}. A real almost
+Hadamard matrix is a rescaled local maximizer on $O_N$; such matrices
+exist in every order and need not be Hadamard. The passage to $U_N$
+allows new directions of variation. These exclude several real
+families coming from designs and circulants \cite{BN}, as recalled in
+Section~\ref{background}.
+
+\begin{samepage}
+In order to put this conjecture in context and illustrate its difficulty,
+we discuss 2 other conjectures concerning unitary groups.
+
+\begin{introconj}[Marcus--de Oliveira]
+For diagonal matrices $A=diag(a_1,\ldots,a_N)$ and
+$B=diag(b_1,\ldots,b_N)$, the inclusion
+\[
+ \det(A+UBU^*)\in conv
+ \left\{\prod_{i=1}^N(a_i+b_{\sigma(i)}):\sigma\in S_N\right\}
+\]
+holds for every $U\in U_N$.
+\end{introconj}
+\end{samepage}
+This concerns sums of normal matrices with prescribed spectra
+\cite{M,O}: unitary diagonalization gives the displayed form. The points
+on the right pair the eigenvalues in every possible order. The
+conjecture confines the determinant to their convex hull in the complex
+plane. It is known through $N=3$ \cite{BMP}; $N=4$ is the first
+unsettled order \cite{BP,MM}.
+
+Higher-dimensional results treat self-adjoint pairs \cite{F}, essentially
+self-adjoint pairs \cite{BKP}, scalar multiples of unitaries \cite{D}, and
+certain normal dilations \cite{R}. A variational approach maximizes
+the projection of the determinant onto a line and studies the resulting
+stationarity equations on $U_N$ \cite{PB,BP}. Its successes and
+obstructions \cite{MM} provide a useful comparison with the AHC.
+
+The second conjecture concerns squared entry moduli. For a unitary $U$,
+put
+\[
+ p(U)=(|U_{ij}|^2),\qquad J_N=(1/N)_{ij}
+\]
+The matrix $p(U)$ is bistochastic: its entries are $\ge0$ and its
+row and column sums are 1. Bistochastic matrices arising this way
+are called unistochastic.
+
+\begin{introconj}[Unistochastic star-shapedness]
+For every unistochastic matrix $M$, the segment
+\[
+ M_t=(1-t)M+tJ_N,\qquad 0\le t\le1
+\]
+consists of unistochastic matrices.
+\end{introconj}
+This holds at $N=3$ \cite{BEKTZ}. Rajchel, G\k{a}siorowski and
+\.Zyczkowski proposed the order-4 conjecture in \cite{RGZ}; the
+higher-dimensional version is discussed in \cite{RKKZ}. Partial
+results include rays supplied by robust Hadamard matrices \cite{RGZ}
+and the circulant subset at order 4 \cite{RKKZ}. In every order,
+the larger set defined by the necessary row and column polygon
+inequalities, called bracelet conditions, is star-shaped \cite{RKKZ}.
+This does not settle the unistochastic case.
+
+The connection to the AHC is the strict increase
+\[
+ h(M_t)>h(M)\quad(M\ne J_N,\ t>0),\qquad
+ h(M)=\sum_{ij}\sqrt{M_{ij}},\qquad L=h\circ p
+\]
+To contradict a local maximum at a particular $U$, however, one needs
+unitaries realizing $M_t$ that approach that same $U$, up to phases.
+Section~\ref{orderthree} supplies this lifting argument at order 3.
+Reconstruction from moduli \cite{AMM}, the defect \cite{TZ}, and the
+critical loci of the modulus map \cite{BebN} describe the higher-order
+difficulty. Random unistochastic ensembles \cite{ZKSS}, volume
+calculations \cite{DZ}, manifold optimization \cite{AMS}, and calibrated
+searches for mutually unbiased bases \cite{BW} give further context.
+
+Our principal structural results concern $U_4$.
+
+\begin{introthm}
+If one $2\times2$ submatrix of a local maximum on $U_4$ can be made
+real by row and column phases, the whole unitary is flat.
+\end{introthm}
+
+The proof uses a block variation with positive second derivative.
+When no $2\times2$ block can be made real by phases, the critical-point
+equations instead impose restrictions on the entry moduli.
+
+\begin{introthm}
+A local maximum on $U_4$ is flat if every row and every column contains
+the same multiset of entry moduli.
+\end{introthm}
+
+In the remaining case, the reciprocal moduli satisfy a rank-2
+condition and explicit polynomial identities. Combining these
+restrictions with a count of the possible modulus patterns gives
+another criterion.
+
+\begin{introthm}
+A nonflat local maximum on $U_4$ would have at least $5$ distinct
+entry moduli.
+\end{introthm}
+
+The last proof uses an exact enumeration of $27$ patterns. All 3
+proofs are in Section~\ref{orderfour}, with the remaining curvature
+equations and numerical evidence in Section~\ref{fourcurvature}.
+
+At order 5, our explicit saddle has
+\[
+ \text{Hessian inertia}=(15,9,1),\qquad
+ \text{all row and column pair curvatures}<0
+\]
+The inertia lists negative, zero and positive eigenvalues. A
+3-column variation gives an increase, and both unstable gradient
+branches converge to Fourier matrices (Section~\ref{fivegeometry}).
+Thus pair tests alone can miss a saddle.
+
+The original campaigns and the subsequent targeted search have the
+following sizes, each from a 7-hour run:
+\begin{center}
+\begin{tabular}{clrr}
+\toprule
+Order & Campaign & Ascent starts & Stationary-search starts\\
+\midrule
+$4$ & Original & $83\,076\,896$ & $52\,237\,424$\\
+$5$ & Original & $181\,164\,464$ & $22\,933\,376$\\
+$5$ & Targeted & $8\,737\,840$ & $26\,213\,552$\\
+\bottomrule
+\end{tabular}
+\end{center}
+At order 4 every ascent return is within $6.014\cdot10^{-6}$ of
+flat in entry moduli. Every accepted nonflat stationary return has
+positive curvature; the near-zero and unresolved returns lie below a necessary
+entry bound. At order 5 every ascent return is near flat, while
+the original stationary campaign left $404\,581$ unresolved returns. Among its saved
+returns, $452$ nonflat stationary matrices form $40$ numerical groups
+and have interval exclusions. Each group representative has a nearby
+exact critical point with certified Hessian inertia. Their norm
+enclosures give at least $35$ distinct nonflat critical values.
+All $288$ saved stalls are explained.
+One explanation is a certified positive local minimum of the squared
+stationarity residual: minimizing that residual need not find a
+critical point of $L$.
+
+The targeted campaign leaves no unresolved or candidate flags under
+the endpoint criteria. A separate replay of the first $16\,189\,008$
+original starts, about $70.6\%$ of that sequence, also leaves no such
+flags after follow-up. Its remaining $6\,744\,368$ starts were not
+revisited, and the replay is not added to the table. Small-entry
+exclusions concern the computed endpoints, not their possible limits;
+matching the known invariant signatures does not prove equivalence.
+
+These are sampled searches, not coverings of $U_4$ or $U_5$.
+Sections~\ref{framework} and~\ref{fivecampaign} separate the variational
+criteria from the numerical classifications and certificates.
+From \texttt{code011}, with NumPy, SciPy, mpmath and SymPy,
+\texttt{python3 reproduce.py}
+rechecks the identities, certificates and retained outputs in a
+temporary copy. Its report \texttt{data/reproduction.json} records
+versions, hashes and outputs for all $27$ checks.
+\texttt{README.md} indexes the code, and every program is cited below.
+
+\section{Hadamard matrices and the conjecture}\label{background}
+\subsection{Hadamard matrices and norm maximization}
+The symbols $*$ and $t$ denote conjugate transpose and transpose.
+
+\begin{samepage}
+\begin{defn}
+A complex Hadamard matrix of order $N$ is a matrix $H$ satisfying
+\[
+ |H_{ij}|=1,\qquad HH^*=NI
+\]
+It is real Hadamard when its entries belong to $\{1,-1\}$.
+A unitary $U$ is flat when $|U_{ij}|=1/\sqrt{N}$ for every entry.
+\end{defn}
+\end{samepage}
+
+The Fourier matrices provide complex examples in every order:
+\[
+ F_N=(w^{ij})_{0\le i,j<N},\qquad w=e^{2\pi i/N}
+\]
+For instance, with $w=e^{2\pi i/3}$ in the second matrix,
+\[
+ F_2=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
+ F_3=\begin{pmatrix}1&1&1\\1&w&w^2\\1&w^2&w\end{pmatrix}
+\]
+Their row orthogonality follows from the geometric-series identity.
+For real Hadamard matrices, $N\ge3$ requires $4$ to divide $N$.
+See \cite{TZguide} for background.
+
+\begin{prop}\label{globalbound}
+The entrywise $1$-norm satisfies
+\[
+ L(U)=\|U\|=\sum_{ij}|U_{ij}|\le N\sqrt N\qquad(U\in U_N)
+\]
+Equality holds exactly when $U$ is flat, or equivalently when
+$H=\sqrt N\,U$ is complex Hadamard.
+\end{prop}
+\begin{proof}
+Cauchy--Schwarz and unitarity give
+\[
+ \sum_{ij}|U_{ij}|\le N\Big(\sum_{ij}|U_{ij}|^2\Big)^{1/2}=N\sqrt N
+\]
+Equality means that all entry moduli are equal. Their squares sum to
+$N$, so their common value is $1/\sqrt{N}$.
+\end{proof}
+
+\subsection{Almost Hadamard matrices}
+The real theory replaces the equality case above by a local maximum
+\cite{BCS,BNZ}. The complex extension is introduced in \cite{BN}.
+
+\begin{defn}
+Write $H=\sqrt N\,U$. The matrix $H$ is real almost Hadamard if $U$
+locally maximizes $L$ on $O_N$, and complex almost Hadamard if $U$
+locally maximizes $L$ on $U_N$.
+\end{defn}
+
+Compactness gives real almost Hadamard matrices in every order.
+``Almost'' refers to local maximality, with no prescribed distance
+from a Hadamard matrix. The simplest nonflat examples are reflections.
+
+\begin{prop}\label{realreflection}
+For $N\ge3$, the matrix
+\[
+ K_N=\frac1{\sqrt N}
+ \begin{pmatrix}
+ 2-N&2&\cdots&2\\
+ 2&2-N&\cdots&2\\
+ \vdots&\vdots&\ddots&\vdots\\
+ 2&2&\cdots&2-N
+ \end{pmatrix}
+\]
+is real almost Hadamard. It is Hadamard exactly when $N=4$.
+\end{prop}
+\begin{proof}
+Let $J_N=(1/N)_{ij}$ and $W_N=K_N/\sqrt N=2J_N-I$.
+Since $J_N^2=J_N$, the matrix $W_N$ is orthogonal. For its sign matrix
+$S$, direct multiplication gives
+\[
+ S^tW_N=2I+(N-4)J_N>0
+\]
+Near $W_N$ the entry signs are fixed and $L(V)=Tr(S^tV)$.
+For every nonzero real skew-symmetric $A$, the curve $W_Ne^{tA}$ has
+\[
+ L'(0)=0,\qquad L''(0)=Tr((S^tW_N)A^2)<0
+\]
+Thus $W_N$ is a strict local maximum on $O_N$. The diagonal and
+off-diagonal moduli agree exactly when $N-2=2$.
+\end{proof}
+
+The same matrices fail to be complex almost Hadamard when $N\ne4$
+\cite[Theorem 4.7]{BN}. This is the basic real--complex distinction:
+the additional unitary directions can destroy a real local maximum.
+
+\begin{conj}[Almost Hadamard conjecture]\label{ahc}
+Every local maximizer of the $1$-norm on $U_N$ is flat. Equivalently, every
+complex almost Hadamard matrix is complex Hadamard.
+\end{conj}
+
+Local maximality here is unrestricted and need not be strict. Row and
+column phases preserve $L$, and Hadamard matrices can occur in families.
+The real theory also includes circulant and 2-entry constructions
+\cite{BNZ}, other entrywise exponents \cite{BNp}, and polar factors of
+complementary Hadamard submatrices under suitable size assumptions
+\cite{BNS}.
+
+\subsection{Designs and circulants: the earlier evidence}
+The 2-entry constructions come from square incidence patterns of
+symmetric block designs. Their rows have constant weights and constant
+pairwise overlaps.
+
+\begin{defn}
+An $(a,b,c)$ pattern has $2$ symbols $x,y$ such that every pair of
+distinct rows has the following counts:
+\[
+ \begin{array}{c|cccc}
+ \text{pair}&(x,x)&(x,y)&(y,x)&(y,y)\\
+ \hline
+ \text{count}&a&b&b&c
+ \end{array}
+ \qquad N=a+2b+c
+\]
+We take $a,c\ge0$ and $b>0$.
+\end{defn}
+
+For a full-support unitary with this pattern, normalize $y>0$ and write
+$x=-\varepsilon t y$, with $t>0$ and $|\varepsilon|=1$.
+Orthogonality and normalization become
+\[
+ at^2-2b\,Re(\varepsilon)t+c=0,\qquad
+ y=\big((a+b)t^2+b+c\big)^{-1/2}
+\]
+Criticality further restricts the phase $\varepsilon$.
+
+\begin{prop}
+A full-support critical unitary with an $(a,b,c)$ pattern is, after
+multiplication by a scalar of modulus $1$, real or flat.
+\end{prop}
+\begin{proof}
+The criticality calculation of \cite[Theorem 5.2]{BN} gives
+\[
+ (\varepsilon-\bar\varepsilon)(t-1)=0
+\]
+If $t=1$ the 2 entry moduli agree. Otherwise $\varepsilon$ is real,
+and orthogonality excludes $\varepsilon=-1$, leaving $\varepsilon=1$.
+\end{proof}
+
+The real branches still require a second-variation test.
+Theorem 6.5 of \cite{BN} excludes $K_N$ for $N\ne4$, the Grassmannian
+matrices $I_N^{q,d}$, and the Paley biplane matrix $P_{11}$.
+The projective-plane examples, including the Fano plane at $q=2$,
+belong to the Grassmannian family at $d=1$ \cite[Proposition 5.5]{BN}.
+These exclusions do not cover every construction from a design.
+
+A circulant matrix has rows obtained by successive cyclic shifts. Its
+unitarity can be expressed in Fourier coordinates as
+\[
+ U=\frac1N F_N\,diag(q_0,\ldots,q_{N-1})F_N^*,\qquad |q_k|=1
+\]
+For real symmetric circulants the parameters satisfy
+\[
+ q_k\in\{1,-1\},\qquad q_k=q_{-k}
+\]
+The method of \cite[Section 7]{BN} averages second derivatives over
+suitable circulant self-adjoint generators. A positive average supplies
+an increasing direction. It excludes the explicit nonflat circulant almost
+Hadamard examples of \cite{BNZ}; further computer checks use the
+examples of \cite{BNp}. A general averaged inequality is proposed in
+\cite[Conjecture 7.8]{BN}, for real symmetric circulants and, in an
+analogous form, for self-adjoint unitary circulants. It is not proved there.
+
+This earlier evidence gives families and variation methods. The
+small-order study below tests the full tangent space; the order-5
+model shows why restricted tests can miss an increasing direction.
+
+\section{Variations and small orders}\label{framework}
+We now pass from norm maximization to first and second derivatives.
+The only nonsmooth points are matrices with zero entries.
+
+\subsection{Criticality and the Hessian}
+\begin{lem}\label{fullsupport}
+A local maximum of $L$ on $U_N$ has no zero entry.
+\end{lem}
+\begin{proof}
+Choose a column rotation that moves a nonzero entry into a zero
+position to first order. In the sum of the increments at $t$ and $-t$,
+nonzero entries contribute $O(t^2)$, the chosen zero contributes a
+positive multiple of $|t|$, and the other zeros contribute amounts $\ge0$.
+This contradicts local maximality. See also \cite[Theorem 1.6]{BN}.
+\end{proof}
+
+We can therefore work where the norm is smooth. Its derivatives are
+expressed in terms of the entry phases.
+
+\begin{defn}
+A matrix has full support when none of its entries is zero. For such
+a unitary $V$, its phase matrix and associated matrix are
+\[
+ S_{ij}=\frac{V_{ij}}{|V_{ij}|},\qquad X=S^*V
+\]
+The matrix $V$ is critical for $L$ when the first derivative vanishes
+along every unitary curve through $V$.
+\end{defn}
+
+We use the real Frobenius inner product and norm
+\[
+ \langle A,B\rangle=Re\,Tr(A^*B),\qquad
+ \|A\|_F^2=\sum_{ij}|A_{ij}|^2
+\]
+Every tangent vector at $V$ is realized by a curve
+\[
+ V(t)=Ve^{itB},\qquad V'(0)=iVB,\qquad B=B^*
+\]
+Thus self-adjoint matrices $B$ parametrize all unitary directions.
+
+\begin{lem}\label{variations}
+Along $V e^{itB}$ the first derivative of $L$ at zero is
+$-Im\,Tr(XB)$. The second derivative is
+\[
+ Q_V(B)=\sum_{ij}\frac{Re((VB)_{ij}\bar S_{ij})^2}
+ {|V_{ij}|}-Re\,Tr(XB^2)
+\]
+Thus $V$ is critical precisely when $X$ is self-adjoint.
+\end{lem}
+\begin{proof}
+For one entry $z(t)$ put $s=z(0)/|z(0)|$. Differentiating $|z|^2=z\bar z$
+gives $(|z|)'=Re(z'\bar s)$ at zero, then
+$(|z|)''=Re(z''\bar s)+Im(z'\bar s)^2/|z(0)|$.
+Substitute $z'=i(VB)_{ij}$ and $z''=-(VB^2)_{ij}$, and sum. Testing
+the first derivative against all self-adjoint $B$ gives the last assertion.
+\end{proof}
+
+At a critical point, $Q_V$ is the Hessian. Local maximality requires
+\[
+ Q_V(B)\le0\qquad\text{for every self-adjoint }B
+\]
+One positive value excludes a local maximum. Nonpositivity alone need
+not establish one, since higher-order terms can matter.
+
+\begin{prop}\label{phasequotient}
+At full support the row and column phase orbits have dimension $2N-1$.
+At a critical point their tangent directions lie in the kernel of the
+Hessian, so the Hessian descends to a quotient of dimension $(N-1)^2$.
+\end{prop}
+\begin{proof}
+The action is $V\to D_1VD_2$, with $D_1,D_2$ diagonal unitaries.
+At full support it fixes $V$ exactly when $D_1=zI$ and $D_2=z^{-1}I$.
+The effective action is free and its orbits have dimension $2N-1$.
+Phase invariance makes the derivative of $L$ along every phase vector
+field identically zero. Differentiating at a critical point shows that
+all Hessian terms involving a phase direction vanish. Removing these
+directions from the $N^2$-dimensional tangent space gives the result.
+\end{proof}
+
+The horizontal Hessian is the restriction to the orthogonal complement
+of the phase directions. The dimensions used in our computations are
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Space & General order & $N=4$ & $N=5$\\
+\midrule
+Full tangent space & $N^2$ & $16$ & $25$\\
+Phase directions & $2N-1$ & $7$ & $9$\\
+Horizontal space & $(N-1)^2$ & $9$ & $16$\\
+\bottomrule
+\end{tabular}
+\end{center}
+A positive geodesic second derivative also excludes a local maximum
+without requiring an exact stationarity certificate.
+
+\subsection{Pair tests and a polar condition}
+For 2 columns write their entries and relative phases as
+\[
+ p_i u_i,\quad q_i v_i,\qquad
+ p_i,q_i>0,\quad |u_i|=|v_i|=1,\qquad h_i=\bar u_i v_i
+\]
+After removing column phases there are 2 real mixing directions.
+Put
+\[
+ d_i=\frac{q_i^2}{p_i}+\frac{p_i^2}{q_i}
+\]
+These quantities determine the largest pair curvature.
+
+\begin{lem}\label{twocol}
+For $2$ columns as above, the quantity
+\[
+ M_{jk}=\frac14\left(\sum_i d_i+
+       \left|\sum_i d_i h_i^2\right|\right)-\frac12\sum_i(p_i+q_i)
+\]
+is the largest value of $Q_V$ on Frobenius-unit off-diagonal self-adjoint
+generators supported on these columns.
+\end{lem}
+\begin{proof}
+Set $B_{jk}=e^{i\theta}/\sqrt2$, $B_{kj}=\bar B_{jk}$. The first term
+of $Q_V(B)$ in Lemma~\ref{variations} becomes $\frac12\sum_i d_i\,Re(h_i e^{-i\theta})^2$.
+The second uses $B^2=(E_{jj}+E_{kk})/2$. Now
+$2Re(z)^2=1+Re(z^2)$ on the unit circle.
+Maximizing the resulting expression over $\theta$ gives the stated formula for $M_{jk}$.
+\end{proof}
+
+The same test applies to rows. Pair tests are inexpensive but do not
+exhaust the Hessian, as the order-5 example will show. Rank-1
+generators give a further necessary condition.
+
+\begin{prop}
+At a local maximum on $U_N$ we have $S^*U\ge I/N$. In particular $S$
+is invertible and its unitary polar factor is $U$.
+\end{prop}
+\begin{proof}
+Write $r_{ij}=|U_{ij}|$ and $X=S^*U$. Fix a unit vector $v$ and insert $B=vv^*$ into $Q_U(B)\le0$.
+For $a_{ij}=Re((Uv)_i\bar v_j\bar S_{ij})$ we have
+$\sum_j r_{ij}a_{ij}=|(Uv)_i|^2$. By Cauchy--Schwarz and
+$\sum_j r_{ij}^3\le\sum_j r_{ij}^2=1$ we obtain
+\[
+ v^*Xv\ge\sum_{ij}\frac{a_{ij}^2}{r_{ij}}
+ \ge\sum_i\frac{|(Uv)_i|^4}{\sum_j r_{ij}^3}
+ \ge\sum_i |(Uv)_i|^4\ge\frac1N
+\]
+Criticality gives $X=X^*=U^*S$, hence $S=UX$ is the polar decomposition.
+\end{proof}
+
+\subsection{The modulus map and its defect}
+\begin{defn}
+A matrix $M$ is bistochastic when
+\[
+ M_{ij}\ge0,\qquad \sum_jM_{ij}=1,\qquad\sum_iM_{ij}=1
+\]
+It is unistochastic when $M=p(U)$ for a unitary $U$, where
+\[
+ p(U)=(|U_{ij}|^2)
+\]
+The fiber over $M$ consists of all unitaries with these squared moduli.
+\end{defn}
+
+The modulus map forgets phases. A tangent variation of a bistochastic
+matrix has zero row and column sums, giving $(N-1)^2$ independent real
+coordinates. The differential $dp_U$ records which variations can be
+realized to first order by a curve of unitaries.
+
+\begin{defn}
+The defect of a full-support unitary is
+\[
+ d(U)=(N-1)^2-rank(dp_U)
+\]
+It measures the missing rank of the modulus map.
+\end{defn}
+
+This is the defect of \cite{TZ}. Nonflat critical points must lie in
+the singular part of the modulus map:
+
+\begin{prop}\label{defect}
+At a full-support nonflat critical point of $L$ on $U_N$, the modulus
+map $p(U)=(|U_{ij}|^2)$ has rank strictly less than $(N-1)^2$.
+\end{prop}
+\begin{proof}
+The affine space of bistochastic matrices has dimension $(N-1)^2$.
+Write $M=p(U)$ and $h(M)=\sum_{ij}\sqrt{M_{ij}}$. Concavity gives
+\[
+ dh_M(J_N-M)\ge h(J_N)-h(M)>0
+\]
+At a critical point of $L=h\circ p$, the differential $dh_M$ vanishes
+on the image of $dp_U$. That image is therefore a proper subspace of
+the space of matrices with zero row and column sums.
+\end{proof}
+
+A direction in the kernel of $dp_U$ leaves the squared moduli fixed to
+first order. Along a unitary curve with this initial direction,
+$p'(0)=0$ gives
+\[
+ L''(0)=\frac12\sum_{ij}\frac{p''_{ij}(0)}{|U_{ij}|}
+\]
+At a critical point, this second variation depends only on the initial tangent vector.
+Finding a positive value in this kernel, after removing phases, is one
+route to the AHC. Section~\ref{fourphases} implements it at order 4.
+Averaging over the unit sphere of the horizontal kernel is another
+possible test, following \cite{BN}; a generally positive average is not
+established here.
+
+\subsection{Orders 1 to 3 and the lifting argument}\label{orderthree}
+\begin{defn}
+A full-support unitary is dephased when its first row and column are
+positive real. A path of unitaries $U(t)$ satisfying
+\[
+ p(U(t))=M(t)
+\]
+is called a lift of the modulus path $M(t)$.
+\end{defn}
+
+Row and column phases always give a dephased representative. The local
+lifting problem asks for representatives approaching the specified
+unitary, rather than another point of its fiber.
+
+\begin{thm}\label{threeflat}
+Every local maximum of $L$ on $U_N$ is flat for $N\le3$.
+\end{thm}
+\begin{proof}
+At order 1 the assertion is automatic. At order 2, full support
+and dephasing reduce the unitary to
+\[
+ \begin{pmatrix}\cos t&\sin t\\\sin t&-\cos t\end{pmatrix},\qquad
+ 0<t<\pi/2
+\]
+Its norm $2(\cos t+\sin t)$ has its only local maximum at $t=\pi/4$.
+
+At order 3 a local maximum $U$ has full support. Multiply its rows and columns by
+phases so that the first row and column are positive. At order 3,
+the unistochastic set is star-shaped about $J_3$, and a positive
+unistochastic matrix determines its dephased unitary up to complex
+conjugation \cite{BEKTZ,AMM}.
+
+Suppose $M=p(U)\ne J_3$. Choose a decreasing sequence $t_n\to0$ and dephased unitary
+lifts $V_n$ of $(1-t_n)M+t_nJ_3$. Compactness of $U_3$ gives a convergent
+subsequence. Its limit lies over $M$ and is still dephased, since every
+entry of $M$ is positive. The limit is therefore $U$ or $\bar U$.
+Conjugating the subsequence in the second case gives unitaries tending
+to $U$. Concavity and $h(J_3)>h(M)$ yield
+\[
+ L(V_n)=h((1-t_n)M+t_nJ_3)
+ \ge (1-t_n)h(M)+t_n h(J_3)>L(U)
+\]
+This contradicts local maximality.
+\end{proof}
+
+The argument needs both a segment in the image of $p$ and control of
+its lifts. Higher-order fibers can be more complicated: star-shapedness
+alone would leave the lifting question at a prescribed unitary. The
+direct variations below avoid this assumption.
+
+\section{Order 4: structural restrictions}\label{orderfour}
+We first prove Theorem A, then obtain equations for the remaining phase
+patterns and deduce Theorems B and C. Section~\ref{fourcurvature} then treats curvature and the numerical evidence. Throughout, $U$ has full support and
+$S_{ij}=U_{ij}/|U_{ij}|$.
+
+\subsection{A real submatrix forces flatness}\label{fourphases}
+For a column pair $p_iu_i,q_iv_i$, call the real lines through the
+phase quotients $h_i=\bar u_iv_i$ its phase lines; $h$ and $-h$ count
+as 1 line. For a full-support $2\times2$ block put
+\[
+ j(E)=Im(\bar E_{11}E_{12}E_{21}\bar E_{22})
+\]
+Thus $j(E)=0$ exactly when phases make $E$ real.
+\begin{thm}\label{threecase}
+A local maximum on $U_4$ is flat if one column pair uses at most $3$
+phase lines. Equivalently, every nonflat local maximum has $j(E)\ne0$
+for all $36$ $2\times2$ submatrices.
+\end{thm}
+We separate the possibilities of 1, 2 and 3 phase lines.
+The basic variation is an imaginary rotation of 2 real columns.
+
+\begin{lem}\label{realup}
+A real unitary locally maximizing $L$ on the complex unitary group is flat.
+\end{lem}
+\begin{proof}
+Mix 2 columns by diagonal entries $\cos t$ and off-diagonal entries
+$i\sin t$. Their squared moduli $a^2,b^2$ in each row become
+$(1-s)a^2+sb^2,sa^2+(1-s)b^2$, where $s=\sin^2t$.
+Strict concavity of the square root increases their sum unless
+$a^2=b^2$. At a maximum every row therefore has constant moduli.
+\end{proof}
+The same rotation handles a pair whose relative phases lie on a
+single real line. The remaining columns determine the equality case.
+
+\begin{lem}\label{onepair}
+A nonflat full-support $U\in U_4$ with a collinear phase-quotient pair
+has an increasing arbitrarily small $2$-row or $2$-column rotation.
+\end{lem}
+\begin{proof}
+Make the 2 columns real. Lemma~\ref{realup}'s rotation works unless
+they are $(a_i),(\epsilon_i a_i)$ with $a_i>0$, $\epsilon_i=\pm1$.
+Each sign has squared mass $1/2$ and must occur twice: a singleton would
+force zeros in the remaining columns. Reorder to obtain
+$(a,b,c,d)^t,(a,b,-c,-d)^t$, with $a^2+b^2=c^2+d^2=1/2$.
+The remaining columns are $(e,f)W$, $W\in U_2$, where
+\[
+ e=\sqrt2(b,-a,0,0)^t,\qquad f=\sqrt2(0,0,d,-c)^t
+\]
+The first 2 rows are collinear in phase, as are the last 2.
+The same rotation increases $L$ unless $a=b$ and $c=d$, making all
+4 numbers $1/2$. Orthogonality of $W$ makes the last 2 column
+quotients collinear. Mixing them increases $L$ unless their moduli
+also agree, which forces flatness by the row norms. Transposition
+gives the row version.
+\end{proof}
+At a critical point, 2 phase lines reduce to the preceding 1-line
+case through orthogonality and the first-order equations.
+
+\begin{lem}\label{twosingle}
+At a full-support critical point on $U_4$, a row pair with exactly $2$
+phase lines forces a collinear column pair, and conversely by transposition.
+\end{lem}
+\begin{proof}
+The equations $\sum p_iq_ih_i=\sum(p_i-q_i)h_i=0$ split on the 2
+lines, each containing 2 opposite phases. On each, products and
+differences agree, determining the positive moduli. Rephase the rows to
+\[
+ (a,a,b,b),\qquad(c,-c,dz,-dz),\qquad z\notin\mathbb R
+\]
+If columns 1 and 2 differ in modulus on the bottom rows, their 2
+remaining differences have opposite signs. Stationarity makes their
+bottom phase quotients equal; orthogonality then makes these real,
+giving collinearity. The same applies to columns 3 and 4.
+Otherwise each bottom row has equal moduli within both pairs and lies
+in the span of $(b,b,-a,-a)$ and $(d,-d,-cz,cz)$.
+For its coefficients $\lambda,\mu$, the modulus equalities imply
+$Re(\bar\lambda\mu)=Re(z\bar\lambda\mu)=0$, so
+$\lambda\mu=0$. Columns 1 and 2 are again collinear.
+\end{proof}
+3 phase lines require a block variation. We first identify 8
+independent modulus coordinates for the differential of the modulus map.
+
+\begin{lem}\label{eightblocks}
+Write $U=\left(\begin{smallmatrix}A&B\\C&D\end{smallmatrix}\right)$
+in $2\times2$ blocks. At full support, $j(B)j(C)\ne0$ makes $dp_U$
+surjective onto the $4$ coordinates of $|A|^2$, the first column of
+$|B|^2$ and the first row of $|C|^2$.
+\end{lem}
+\begin{proof}
+The block $C$ is invertible, since rank 1 would give $j(C)=0$.
+The left skew-adjoint generator
+$\left(\begin{smallmatrix}0&Z\\-Z^*&0\end{smallmatrix}\right)$
+gives $\dot A=ZC$, prescribing the first 4 coordinates.
+Keeping $A$ fixed, a last-column mixing changes the 2 entries of
+$|B_{i1}|^2$ by $2Re(w\bar B_{i1}B_{i2})$ up to sign. These forms
+are independent precisely when $j(B)\ne0$, and $C$ stays fixed.
+Mixing the last rows likewise prescribes the 2 $C$ coordinates.
+\end{proof}
+At a nonflat critical point, Proposition~\ref{defect} bounds the rank
+by 8. Under this lemma it is exactly 8, and these coordinates
+determine every vector in its image. Put $M=p(U)$ and $h(M)=\sum\sqrt{M_{ij}}$.
+\begin{lem}\label{blockcurve}
+Let $U$ be a full-support nonflat critical point with $j(A)=0$ and
+$j(B)j(C)\ne0$. Simultaneously exchange rows $1,2$ and
+$3,4$ and likewise columns, obtaining $\tilde M$.
+There is a unitary curve with $p'(0)=0$, $j(D)=0$, and
+\[
+ L''(0)=\sum_{\{x,y\}}\frac{(x-y)^2(x+y)}{xy}
+\]
+where the $8$ pairs $\{x,y\}$ are the exchanged entry moduli.
+\end{lem}
+\begin{proof}
+Make $A$ real. For $E^\#=\left(\begin{smallmatrix}
+\bar E_{22}&-\bar E_{21}\\-\bar E_{12}&\bar E_{11}
+\end{smallmatrix}\right)$, the operation respects products and adjoints,
+and $V^\#=\overline{\det V}V$ for $V\in U_2$.
+Polar decomposition and unitarity give fixed $V,W\in U_2$ with
+\[
+ B=(I-AA^*)^{1/2}V,\quad C=W(I-A^*A)^{1/2},\quad D=-WA^*V
+\]
+Conversely these formulas complete any strict contraction $A$ to a
+unitary. Use $A(t)=\cos t\,A+i\sin t\,A^\#$.
+The products $A(t)^*A(t),A(t)A(t)^*$ are even, since the cross products
+for real $A$ equal $(\det A)I$. Thus $B'(0)=C'(0)=0$, while
+\[
+ D(t)=\cos t\,D-i\sin t\,\eta D^\#,\qquad \eta=\det W\det V
+\]
+The 8 coordinates above have zero derivative; hence all of $p'(0)$
+vanishes. In particular $\eta\overline{D_{11}D_{22}}$ and
+$\eta\overline{D_{12}D_{21}}$ are real, so $j(D)=0$.
+In the diagonal blocks, squared moduli follow exactly
+$\cos^2t\,M+\sin^2t\,\tilde M$.
+
+The difference $p''(0)-2(\tilde M-M)$ vanishes there and has zero
+row and column sums. Each other block is a multiple of
+$\left(\begin{smallmatrix}1&-1\\-1&1\end{smallmatrix}\right)$.
+Both variations lie in $im(dp_U)$: since $j(D)=0$, some
+last-column mixing fixes $|D|^2$ to first order, while $j(B)\ne0$
+makes its change in $|B|^2$ nonzero. Transpose for $C$.
+Criticality kills these differences under $dh_M$; consequently
+$L''(0)=2dh_M(\tilde M-M)$, giving the formula by pairing terms.
+\end{proof}
+The curvature formula is positive unless all exchanged moduli agree.
+We now rule out this equality case at a nonflat critical point.
+
+\begin{lem}\label{blockequal}
+Under these hypotheses, $\tilde M=M$ is impossible.
+\end{lem}
+\begin{proof}
+The blocks $A,D$ would have equal opposite moduli and could be made
+real. A negative product of their entries would cancel their column
+inner product, forcing respectively $j(C)=0$ or $j(B)=0$.
+Make both blocks positive by independent phases; then $\eta=\pm1$.
+For squared moduli of a block set
+$f(X)=\sqrt{X_{11}X_{22}}-\sqrt{X_{12}X_{21}}$.
+Differentiate $\det D=\eta\overline{\det A}$ along an arbitrary
+unitary variation. Since $\eta'$ is imaginary, real parts give
+\[
+ df_{M_D}(\dot M_D)-\eta\,df_{M_A}(\dot M_A)=0
+\]
+This functional is nonzero on the 9-dimensional bistochastic tangent
+space: its value on the checkerboard variation in $A$ is $-2\eta$.
+Its kernel is therefore exactly $im(dp_U)$.
+On blocks with equal opposite entries, the segment $M\to J_4$ scales
+both $f$ values by $1-t$. Thus $J_4-M$ belongs to this kernel,
+contradicting $dh_M(J_4-M)>0$.
+\end{proof}
+\begin{proof}[Proof of Theorem~\ref{threecase}]
+Lemmas~\ref{onepair} and~\ref{twosingle} settle 1 or 2 lines.
+For 3 lines place the repeated pair in $A$, so $j(A)=0$ and
+$j(C)\ne0$. If $j(B)=0$, the first 2 rows use at most 2 lines.
+Otherwise Lemmas~\ref{blockcurve} and~\ref{blockequal} give positive
+second derivative. Transposition treats row pairs.
+\end{proof}
+
+The block direction can mix all 4 columns; existence of an increasing
+single pair at every nonflat critical point remains open. For a 3-line column pair with
+singleton rows $a,b$, orthogonality and stationarity give
+$p_a^{-1}-q_a^{-1}=p_b^{-1}-q_b^{-1}$: project both equations onto a
+linear functional killing the repeated line.
+
+If every column pair uses at most 2 lines, any local maximum is flat
+by Theorem~\ref{threecase}. As a separate finite check,
+\texttt{phase\_grid.py} tests all $4^9=262144$ dephased fourth-root
+phase patterns: $192$ pass the necessary sign-balance test, comprising
+$168$ real non-Hadamard patterns, $6$ real and $18$ nonreal Hadamard
+patterns. Passing this test does not prove unitary realizability.
+
+\subsection{The equations for 4 distinct phase lines}\label{fourlinessection}
+We now assume that all $36$ quantities $j(E)$ from
+Theorem~\ref{threecase} are nonzero. The first-order equations already
+restrict the moduli in this case. Write $e=(1,1,1,1)^t$ and put
+\[
+ R_{ia}=\frac1{|U_{ia}|},\qquad P=I-\frac14ee^t,
+ \qquad G=PRP
+\]
+Thus $G$ is obtained from the reciprocal moduli by subtracting the row
+and column means and adding the overall mean.
+
+\begin{lem}\label{distinctdifferences}
+At a nonflat critical point under our assumption, the $4$ numbers
+$R_{ia}-R_{ib}$ are pairwise distinct for every pair of columns $a,b$.
+The same holds for rows.
+\end{lem}
+\begin{proof}
+Put $z_i=\bar U_{ia}U_{ib}$ and $d_i=R_{ia}-R_{ib}$. Orthogonality and
+criticality give, respectively,
+\[
+ \sum_i z_i=0,\qquad \sum_i d_i z_i=0
+\]
+Indeed, the second equation is the $(a,b)$ entry of $S^*U-U^*S=0$.
+If $d_1=d_2$, subtract $d_1$ times the first equation from the second.
+The vectors $z_3,z_4$ are linearly independent over $\mathbb R$, so all
+4 differences agree. Since the 2 columns have equal squared norms
+and $r\to r^{-2}$ is strictly decreasing, their common difference
+is zero. In particular, for every 2 rows $i,j$, the row difference
+$R_{il}-R_{jl}$ agrees at $l=a,b$. Apply the same argument to
+$U^t$, which is also critical. All row differences are zero, and column
+normalization now gives $|U_{ia}|=1/2$ everywhere.
+\end{proof}
+
+The distinct reciprocal differences determine 2-dimensional planes
+for each column pair. Compatibility between these planes gives a rank
+restriction on the whole matrix.
+
+\begin{thm}\label{reciprocalrank}
+At a nonflat critical point of $L$ on $U_4$ with $4$ distinct phase
+lines for every pair, the centered reciprocal modulus matrix $G$ has
+rank exactly $2$.
+\end{thm}
+\begin{proof}
+Fix $a,b$ and put $J_{kl,ab}=Im(\bar z_k z_l)$.
+The 2 columns $Re(z),Im(z)$ span the
+orthogonal complement in $\mathbb R^4$ of $e,d$. Both planes have
+dimension 2 by our phase assumption and Lemma~\ref{distinctdifferences}.
+The oriented area forms of complementary 2-planes are Hodge dual up
+to a nonzero scalar. In coordinates their $2\times2$ minors therefore
+satisfy
+\[
+ J_{kl,ab}=c_{ab}\,\epsilon_{ijkl}(d_i-d_j)
+\]
+where $i,j,k,l$ are distinct and $\epsilon_{ijkl}$ is the sign of this
+permutation. The real number $c_{ab}$ is independent of the row indices.
+Exchanging $a,b$ negates both $J$ and $d$, hence $c_{ba}=c_{ab}$.
+
+For fixed $k,l,a$ we have $\sum_{b\ne a}J_{kl,ab}=0$, by orthogonality of
+rows $k,l$. For the complementary rows $i,j$, put $v_a=R_{ia}-R_{ja}$.
+The preceding identity gives
+\[
+ \sum_{b\ne a} c_{ab}(v_a-v_b)=0
+\]
+Let $H$ have off-diagonal entries $-c_{ab}$ and diagonal entries
+$\sum_{b\ne a}c_{ab}$. This nonzero real symmetric matrix kills
+$e$ and every row difference of $R$, viewed as a column vector.
+It therefore kills their projections by $P$, which span the row space
+of $G$. This space is orthogonal to $e$, so $rank(G)\le2$.
+
+Rank zero contradicts Lemma~\ref{distinctdifferences}. In rank 1 we
+could write
+\[
+ R_{ia}=u_i+v_a+x_i y_a
+\]
+with all parameters real, by restoring the row and column means to $G$.
+The lemma forces the $x_i$ to be pairwise distinct, and likewise the $y_a$.
+Criticality says that $iS$ is tangent at $U$, since $U^*S$ is self-adjoint.
+Subtracting the phase tangents $i\,diag(u)U+iU\,diag(v)$ leaves
+$i\,diag(x)U\,diag(y)$ tangent. Thus $U^*\,diag(x)U$ commutes with
+$diag(y)$ and must be diagonal. Every column of $U$ would be an
+eigenvector of $diag(x)$. Its eigenvalues are simple, whereas every
+column has 4 nonzero entries.
+\end{proof}
+
+Interpolation at the 4 distinct reciprocal differences gives a
+polynomial identity involving only the moduli.
+
+\begin{prop}\label{pairequation}
+Write $p_i=|U_{ia}|$, $q_i=|U_{ib}|$, $d_i=p_i^{-1}-q_i^{-1}$ and
+$D_i=\prod_{j\ne i}(d_i-d_j)$. Under the assumptions of
+Theorem~\ref{reciprocalrank}, every column pair satisfies
+\[
+ \sum_{i=1}^4 p_i^2 q_i^2 D_i=0
+\]
+The $6$ row pairs satisfy the same identity.
+\end{prop}
+\begin{proof}
+For $k=0,1,2$, interpolation of $t^k$ at the 4 distinct nodes $d_i$
+gives $\sum_i d_i^k/D_i=0$ by comparison of cubic coefficients.
+The solutions of $\sum z_i=\sum d_i z_i=0$ therefore have the form
+\[
+ z_i=(A+B d_i)/D_i,\qquad A,B\in\mathbb C
+\]
+Indeed these vectors form a 2-dimensional complex space.
+Now $p_i^2q_i^2D_i^2=|A+B d_i|^2$ is the value of a quadratic at $d_i$.
+The coefficient of degree 3 in its interpolating polynomial is
+$\sum_i p_i^2q_i^2D_i$, giving the formula.
+\end{proof}
+
+The same interpolation also reconstructs the relative phases.
+It leaves only finitely many conjugation choices to check.
+
+\begin{prop}\label{phaseuniqueness}
+In the $4$-line case, prescribed moduli determine at most $1$ dephased
+nonflat critical unitary, up to complex conjugation. There is an explicit
+reconstruction test.
+\end{prop}
+\begin{proof}
+For each pair interpolate $p_i^2q_i^2D_i^2$ at $d_i$. By
+Proposition~\ref{pairequation} this gives a quadratic
+$q(t)=a_2t^2+a_1t+a_0$. 4 distinct phase lines require and, for that
+pair, are equivalent to
+\[
+ a_2>0,\qquad 4a_0a_2>a_1^2
+\]
+Take $B=\sqrt{a_2}$ and
+$A=a_1/(2B)+i\sqrt{a_0-a_1^2/(4a_2)}$ in $z_i=(A+Bd_i)/D_i$.
+This gives all pair solutions up to common phase and conjugation.
+Pair column 1 with each other column and make their first entries
+positive. The 3 conjugation choices leave at most 4 candidates
+up to simultaneous conjugation; test their remaining orthogonality and
+stationarity equations.
+
+In fact at most 1 candidate survives. Let $v$ span
+$\ker G\cap e^\perp$. The symmetric matrix $H$ in the proof of
+Theorem~\ref{reciprocalrank} has this line as its image, so
+$c_{ab}=\lambda v_av_b$ with all factors nonzero. Choose the conjugate
+representative with $\lambda>0$. For each $b>1$, the sign
+\[
+ sgn(J_{12,1b})
+ =sgn\big(v_1v_b(R_{31}-R_{3b}-R_{41}+R_{4b})\big)
+\]
+fixes the conjugation choice. This proves uniqueness. In particular,
+symmetric moduli force $U^t=U$: the alternative $U^t=\bar U$ would make
+$U$ self-adjoint and give a real principal $2\times2$ phase product.
+\end{proof}
+
+\subsection{Common profiles and at most 4 moduli}\label{fewmoduli}
+The rank and pair equations have concrete consequences. We first handle
+2 group patterns, then show that a common multiset reduces to them.
+
+\begin{thm}\label{groupmoduli}
+Let $U\in U_4$ be a local maximum of $L$. Suppose that after row and
+column permutations its moduli have the form $|U_{ia}|=f(a-i)$ on
+$\mathbb Z_4$ or on $\mathbb Z_2^2$. Then $U$ is flat.
+\end{thm}
+\begin{proof}
+If $U$ were nonflat, all $j(E)$ would be nonzero by
+Theorem~\ref{threecase}. The reciprocal moduli have the same symmetry.
+In the cyclic case write their first row as $(a,b,c,d)$.
+On the orthogonal complement of constants the eigenvalues of the
+circulant are $a-b+c-d$ and the conjugate pair
+$a-c\pm i(b-d)$. Rank 2 forces $a+c=b+d$. Write
+\[
+ (a,b,c,d)=(m+x,m+y,m-x,m-y)
+\]
+Read 2 adjacent rows cyclically, with reciprocal moduli
+$(a,b,c,d)$ and $(b,c,d,a)$. Their 4 differences are
+$(x-y,x+y,y-x,-x-y)$. Substitution in
+Proposition~\ref{pairequation} and multiplication by $a^2b^2c^2d^2$
+gives
+\[
+ 64m^3xy(x-y)(x+y)=0
+\]
+For example, the left side is the expansion of
+$c^2d^2D_1+d^2a^2D_2+a^2b^2D_3+b^2c^2D_4$. Since $m>0$, one of the
+4 other factors must vanish. If $x=y$ or $x=-y$, 2 adjacent-row
+differences coincide. If $x=0$ or $y=0$, 2 opposite-row differences
+in $(2x,2y,-2x,-2y)$ coincide. Both conclusions contradict
+Lemma~\ref{distinctdifferences}.
+
+For $\mathbb Z_2^2$ the 3 nonconstant eigenvalues are
+$a+b-c-d$, $a-b+c-d$, $a-b-c+d$. One must vanish. Relabel the 3
+nonidentity elements to arrange $a+b=c+d$. The rows $(a,b,c,d)$ and
+$(c,d,a,b)$ have differences $(a-c,b-d,c-a,d-b)$. The first and
+last coincide, giving the same contradiction.
+\end{proof}
+
+A common row and column profile can be decomposed into permutation
+matrices. At order 4 these recover exactly the 2 group patterns
+just considered.
+
+\begin{thm}\label{multisetmoduli}
+Suppose that each row and each column of a local maximizer on $U_4$
+contains the same multiset of entry moduli. Then the unitary is flat.
+\end{thm}
+\begin{proof}
+For a modulus occurring $k$ times per row and column, join row $i$ to
+column $a$ when the entry has this modulus. The resulting bipartite
+graph is $k$-regular. Any set of rows has at least as many neighbors,
+by counting incident edges. Hall's theorem gives a perfect matching,
+whose removal lowers every degree by 1. Repeating this for each
+modulus partitions the array into 4 permutation matrices, each
+carrying a constant modulus. This step allows repetitions among the
+4 moduli.
+
+Permute columns to make the first matching the identity. The other
+3 permutations have no fixed points. If they are all involutions,
+they are the 3 double transpositions, which together with the
+identity act regularly as the Klein 4-group. Otherwise one is a
+4-cycle $s$. At each row $i$ the remaining columns are $s^2(i)$ and
+$s^3(i)$. These edges form a single bipartite cycle of length 8. Indeed,
+traversing an $s^3$ edge and returning along an $s^2$ edge advances
+the row by $s$. Its only perfect matchings are the 2 alternating
+ones. Thus the 4 permutations are $1,s,s^2,s^3$. In either case
+we can label rows and columns by the group so the modulus at $(i,a)$
+depends only on $a-i$. Theorem~\ref{groupmoduli} applies.
+\end{proof}
+
+In particular, a local maximizer on $U_4$ with at most 2 distinct entry
+moduli is flat. Indeed, if these moduli are $r\ne s$, the number $k$ of
+entries of modulus $r$ on any row or column satisfies
+$kr^2+(4-k)s^2=1$. This fixes $k$ throughout the matrix.
+
+With 3 distinct moduli, different row profiles can still occur.
+Normalization and the reciprocal-difference restrictions rule them out.
+
+\begin{prop}\label{threemoduli}
+A local maximum on $U_4$ having at most $3$ distinct entry moduli is
+flat.
+\end{prop}
+\begin{proof}
+It remains to consider 3 distinct squared moduli, which we call
+symbols. Suppose that a nonflat local maximum exists. By
+Theorem~\ref{threecase} and Lemma~\ref{distinctdifferences}, 2 rows
+can have equal symbols in at most 1 column. Also, wherever one row has a repeated symbol,
+another row must take different values at those positions. Both rules
+hold for columns.
+
+A constant row is impossible, since another row would need 4
+distinct symbols. Suppose that one row has the form $(x,x,x,y)$.
+Each other row contains all 3 symbols in its first 3 positions.
+Normalization forces their fourth entries to have the same squared
+modulus $z$. Comparing the first row with the last column gives
+$3x+y=3z+y$, hence $x=z$. Comparing with any other row now gives
+$3x+y=x+y+w+x$, where $w$ is the third symbol. This forces $w=x$.
+We have ruled out triples in both rows and columns.
+
+The possible multiplicities in a row are now $(2,1,1)$ and $(2,2)$.
+2 rows of the second kind must use the same pair $x,y$, since their
+sums agree and there are only 3 symbols. Under a row
+$(x,x,y,y)$ the second such row must put distinct entries in the first
+pair and in the last pair. The rows then agree twice. Thus at most 1
+row has type $(2,2)$, and likewise for columns. All rows and columns
+of type $(2,1,1)$ repeat the same symbol, by normalization.
+
+If there is a row $(x,x,y,y)$, comparison with a row of the other type
+shows that its repeated symbol is the third symbol $z$ and that
+$x+y=2z$. There are 6 copies of $z$ in the matrix. Consequently
+exactly 1 column has type $(2,2)$ and contains no $z$. Delete this
+column and the row $(x,x,y,y)$. Each row and column of the remaining
+$3\times3$ array contains 2 copies of $z$. Any 2 of its rows
+share a $z$ in 1 column. In the deleted column 2 of these 3
+rows must also agree, since only $x,y$ occur there. This contradicts
+the first rule. Transposition rules out a column of type $(2,2)$ as
+well. All rows and columns therefore have the same multiset, and
+Theorem~\ref{multisetmoduli} finishes the proof.
+\end{proof}
+
+4 distinct moduli require a finite classification. The count
+constraints reduce the problem to $27$ patterns, each excluded by
+explicit polynomial identities.
+
+\begin{thm}\label{fourmoduli}
+Every local maximum of $L$ on $U_4$ with at most $4$ distinct entry
+moduli is flat.
+\end{thm}
+\begin{proof}
+Only 4 distinct moduli and unequal profiles remain. Label symbols
+$0,1,2,3$ in increasing reciprocal order, with squared moduli
+$s_0>s_1>s_2>s_3$. For a sorted row or column profile $w$, put
+$n_k(w)=\#\{w_i\ge k\}$ and $u=(s_0-s_1,s_1-s_2,s_2-s_3)>0$.
+Its squared norm is $4s_0-n(w)\cdot u$, so all 8 profiles have the
+same scalar product with $u$.
+
+For enumerating profiles, $u$ can be taken integral with entries at
+most $32$. In rank 2, cross 2 independent differences
+$n(w)-n(w_0)$: the coordinates are bounded by $2\cdot4^2$ and have
+one sign. In rank 1 a difference $d$ has both signs; assign the sum
+of negative absolute entries to its positive positions, the sum of
+positive entries to its negative positions, and $1$ to zeros.
+Rank zero is the common-profile case. This imposes no arithmetic
+restriction on the actual moduli.
+
+There are $35$ profiles. Group them by their scalar product for
+$u\in\{1,\ldots,32\}^3$, retaining groups with at least 2 profiles
+and all 4 symbols: $157$ groups remain, $93$ maximal. Assemble
+4 words from each maximal group, requiring columns from the same
+word set. Reject row pairs repeating an ordered symbol pair or agreeing
+twice, by Lemma~\ref{distinctdifferences}; reject fewer than 4
+symbols or a common profile. Canonicalize by sorting rows after every
+column permutation, also after transposition. Exactly $27$ arrays remain.
+
+Scale the reciprocal levels to $1<x<y<z$. Impose equal row and column
+sums of inverse squares, the 12 pair equations, and
+\[
+ \det(R_{ia}-R_{1a}-R_{i1}+R_{11})_{2\le i,a\le4}=0
+\]
+Clear positive denominators and factor over the rationals. A factor
+with nonzero coefficients of one sign after
+$x=1+a,y=1+a+b,z=1+a+b+c$ is nonvanishing for $a,b,c>0$.
+This check excludes $10$ arrays by norms or determinant and $13$ by a
+pair equation. In 3 more, the surviving determinant factors are
+$3x-y-z-1$, $6x-4y-z-1$, $6x-y-4z-1$; each also requires
+$x^2(1+y+z)-yz=0$. Substitution for $x$ makes this strictly positive
+by the same coefficient test.
+
+The last array and determinant equation are
+\[
+ \begin{pmatrix}0&2&3&3\\2&1&2&3\\3&2&1&2\\3&3&2&0\end{pmatrix},
+ \qquad xz-x+y^2-3yz+y+z^2=0
+\]
+Rescale the reciprocal levels to $r_3=1$ and put
+$h=1-r_0$, $t=(1-r_2)/h$. The determinant gives
+\[
+ (r_0,r_1,r_2,r_3)=(1-h,1-h(t+t^2),1-ht,1),
+ \qquad 0<h,t<1,\quad t+t^2<1
+\]
+Take the norm difference of rows 1 and 2 and the pair equations for
+rows $(1,2),(1,3)$. Discard sign-definite factors, homogenize with
+$r_0$, and substitute these levels. Removing constant factors and
+powers of $h,t-1,t+1$ leaves $F,G,K$ of degrees $5,6,6$ in $h$.
+Their resultants have monic greatest common divisor
+\[
+ \gcd(Res_h(F,G),Res_h(F,K))
+ =t^{26}(t^2+t-1)^4
+\]
+It cannot vanish in the required domain. This exhausts the $27$ arrays.
+Every count, factor test and resultant is reproduced by
+\texttt{four\_moduli.py}; \texttt{four\_lines.py} checks the earlier
+cyclic factorization and matching classification.
+\end{proof}
+
+\section{Order 4: curvature and numerical evidence}\label{fourcurvature}
+The restrictions above leave the case of 4 distinct phase lines and
+at least 5 entry moduli. We examine its remaining curvature, then
+give exact calibration saddles and the results of the searches.
+
+\subsection{Curvature in the remaining case}\label{curvaturesection}
+At a nonflat 4-line critical point $dp_U$ has rank 8, by
+Lemma~\ref{eightblocks}. Its kernel consists of 7 phase directions
+and 1 further direction, represented by $iS=iUX$: this fixes all
+moduli to first order and is not a phase tangent, since that would give
+$R_{ij}=u_i+v_j$ and $G=0$.
+For an anchor $(a,b)$ set
+\[
+ T^{ab}_{ij}=R_{ij}-R_{ib}-R_{aj}+R_{ab},\qquad
+ m_k^{ab}=\sum_{ij}|U_{ij}|^2(T^{ab}_{ij})^k
+\]
+The following formula tests this direction, even when phase lines coincide.
+
+\begin{prop}\label{realcubic}
+At every full-support critical point on $U_4$, all $16$ values
+\[
+ C_{ab}=m_3^{ab}-\frac32m_1^{ab}m_2^{ab}
+              +\frac12(m_1^{ab})^3
+\]
+agree and equal $Q_U(X)=\sum_{ij}|U_{ij}|^{-1}-Tr(X^3)$, where
+$X=U^*S$. A positive common value excludes a local maximum.
+\end{prop}
+\begin{proof}
+Put $\alpha_i=R_{ib}$, $\beta_j=R_{aj}-R_{ab}$ and
+$B=X-U^*\,diag(\alpha)U-diag(\beta)$. Then
+$(UB)_{ij}=T^{ab}_{ij}U_{ij}$ and phase invariance gives $Q_U(B)=Q_U(X)$.
+The self-adjoint matrix $B$ kills the independent vectors $e_b,U^*e_a$,
+so it has rank at most 2. Thus
+\[
+ Tr(B)=m_1,\quad Tr(B^2)=m_2,\quad
+ Tr(B^3)=\frac32m_1m_2-\frac12m_1^3
+\]
+Substitute $X=B+U^*\,diag(\alpha)U+diag(\beta)$ in the second variation.
+The additive terms cancel against the corresponding part of
+$\sum_{ij}|U_{ij}|T_{ij}^2$, leaving $m_3-Tr(B^3)$.
+\end{proof}
+In the 4-line case $B$ has rank exactly 2: rank 1 would make
+the phase products in its nonzero complementary $3\times3$ block
+real. Hence $m_2\ne m_1^2$ and $m_2\ge m_1^2/2$. The equalities
+$C_{ab}=C_{11}$ give 15 necessary consistency equations, with no
+claim of independence or sufficiency. On the $3596$ saved nonflat returns,
+\texttt{curvature.py} finds discrepancy below $3.3\cdot10^{-11}$ from
+the trace formula and common values in $(3.5867,3.9118)$.
+
+\begin{prop}\label{rankonlyobstruction}
+Bistochasticity, centered reciprocal rank $2$ and nonzero mixed
+differences do not force a positive cubic: there are positive data $M$
+with all $C_{ab}\in(-0.008,-0.000017)$. These data have no critical
+unitary realization.
+\end{prop}
+\begin{proof}
+An explicit certificate uses $G=10^{-10}AD^t$, where
+\[
+ A=\begin{pmatrix}-15233&-48634\\7967&-41084\\13665&113540\\-6399&-23822\end{pmatrix},
+ \qquad
+ D=\begin{pmatrix}79990&-3775\\-104383&15717\\37032&149\\-12639&-12091\end{pmatrix}
+\]
+Both factors are centered and have rank 2. Put
+$R_{ij}=G_{ij}+u_i+v_j$, $v_4=0$, and $M_{ij}=R_{ij}^{-2}$.
+Solve the 4 row and first 3 column normalization equations in
+the box of radius $10^{-10}$ around
+\[
+ \begin{gathered}
+ (u_1,u_2,u_3,u_4)=(2.007055173083,2.007781759308,\ 
+                  2.008127664289,2.002764453315)\\
+ (v_1,v_2,v_3)=(-0.001933545200,-0.000421319991,-0.004970340424)
+ \end{gathered}
+\]
+Let $F$ be 1 minus these 7 sums. Take the inverse of $DF$ at the center and round its entries to 40
+significant decimals, obtaining a rational preconditioner $Y$. Interval arithmetic verifies
+$\|I-YDF\|_\infty<4.5\cdot10^{-9}$ and that $x-YF(x)$ maps the box
+into its concentric box of radius $5\cdot10^{-13}$. The contraction
+principle gives a unique solution. On the whole box $R>0$, all mixed
+differences are nonzero, and the claimed cubic bounds hold.
+Moreover $C_{11}\in(-0.002962,-0.002961)$ and
+$C_{44}\in(-0.000017406,-0.000017404)$; their inequality excludes a
+critical unitary by Proposition~\ref{realcubic}.
+All interval operations are in \texttt{curvature.py}.
+\end{proof}
+
+There is nevertheless a positive result near $J_4$. Write
+\[
+ H=\begin{pmatrix}1&1&1\\1&-1&-1\\-1&1&-1\\-1&-1&1\end{pmatrix},
+ \qquad F=(e\ H),\qquad G=HAH^t
+\]
+The 12 pair equations mean the equations of
+Proposition~\ref{pairequation} with weights $M_{ia}M_{ib}$; they make
+sense even when differences coincide.
+\begin{thm}\label{regularflatlimit}
+Let $M(t)$ be a $C^2$ path of positive bistochastic matrices with
+$M(0)=J_4$, $M'(0)\ne0$. Suppose for all small $t>0$ that
+$rank(G(t))\le2$, the $12$ pair equations hold, and all
+$16$ $C_{ab}(t)$ agree. Write
+$G(t)=tHA_0H^t+t^2HA_1H^t+o(t^2)$.
+After row and column permutations and possibly transposition,
+\[
+ A_0=\begin{pmatrix}a&b&0\\0&0&0\\0&0&0\end{pmatrix},\quad
+ a^2+b^2>0,\qquad C(t)=32(a^4+b^4)t^4+o(t^4)>0
+\]
+No unitary realization is assumed.
+\end{thm}
+\begin{proof}
+Normalization gives $R=2ee^t+tG_0+O(t^2)$ and
+$M=J_4-tG_0/4+O(t^2)$, where $G_k=HA_kH^t$.
+For each anchor let $T,Z$ be the mixed differences of $G_0,G_1$.
+Put $u_k=\frac14\sum T_{ij}^k$. The cubic coefficient is
+$E=u_3-\frac32u_1u_2+\frac12u_1^3$.
+For the matrix of these coefficients, direct expansion gives
+\[
+ (F^tEF/16)_{k0}=-96\prod_j(A_0)_{kj},\qquad
+ (F^tEF/16)_{0k}=-96\prod_i(A_0)_{ik}\quad(k=1,2,3)
+\]
+They vanish, so every row and column of $A_0$ contains a zero.
+The leading coefficient of a column-pair equation is
+$32\prod_i(A_0v)_i$, with $v=e_j\pm e_k$ up to sign.
+Thus any 2 columns $u,v$ satisfy
+$\prod_i(u_i+v_i)=\prod_i(u_i-v_i)=0$.
+They have a common zero: otherwise 2 different positions have
+$u_i=\pm v_i\ne0$, forcing both third entries to vanish because each
+column contains a zero. Their zero sets intersect pairwise. Unless
+all 3 share a zero, they are the 3 distinct 2-element
+subsets, making $A_0$ a nonsingular monomial matrix. This contradicts
+$\det A_0=0$. Transposition gives a zero column as well.
+
+For the remaining block $\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)$,
+the $(1,1),(1,2),(2,1),(2,2)$ transformed cubic coefficients are
+$48bcd,48acd,48abd,48abc$. At most 2 entries survive, and then $E=0$.
+For completeness the fourth coefficient can be recovered without any
+asymptotic guess: expand the same cubic expression using
+\[
+ T(t)=tT+t^2Z,\qquad M(t)=J_4-tG_0/4
+\]
+and retain degree 4. Call the resulting anchor matrix $D$.
+If the 2 entries occupy different rows and columns, put
+$A_0=diag(a,b,0)$. Then
+\[
+ (F^tDF/16)_{33}=-48ab(a^2+b^2)\ne0
+\]
+independently of $A_1$, contradicting equality of the anchor values.
+The remaining support is 1 row or column. For the displayed $A_0$
+and arbitrary $A_1$, the constant coefficient is
+\[
+ (F^tDF/16)_{00}=32(a^4+b^4)
+\]
+These polynomial identities are checked exactly in \texttt{flat\_limit.py}.
+The $C^2$ remainders contribute $o(t^4)$, giving the conclusion.
+\end{proof}
+This result concerns regular paths in the modulus equations. It gives
+neither a uniform punctured neighborhood nor a global exclusion.
+Paths with vanishing first derivative can require fractional powers
+after reparametrization and are not covered.
+
+A bounded exploratory search parametrized $G=AB^t$ with
+$\|G\|_F<\sqrt3$, balancing $R$ by additive row and column terms.
+The $300$ starts comprised $30$ fitting cubic consistency alone, $30$
+fitting pair equations alone, and $120$ each combining cubic consistency
+with a negative-value target or with the pair equations. The last 2
+minimum scaled residuals were $0.04015$ and $0.001853$, neither below
+$10^{-7}$. These are auxiliary residuals, not unitary criticality tests.
+\texttt{moduli\_search.py --verify-saved} rechecks every retained endpoint;
+these searches exclude no additional critical unitaries.
+
+It remains open whether normalization, reciprocal rank 2, the pair
+identities, cubic consistency and phase compatibility force positive
+common curvature at every nonflat 4-line critical point. A negative
+common cubic alone would not settle the full Hessian test.
+
+\subsection{2 exact calibration saddles}\label{fourcalibration}
+2 of the stationary levels in the next subsection have explicit representatives.
+For the first, take $a=\cos(\pi/8)/\sqrt2$ and
+$b=\sin(\pi/8)/\sqrt2$. An exact representative is
+\[
+ U=\begin{pmatrix}
+ a&b&a&b\\ a&-b&-b&-a\\ b&a&-a&b\\ b&-a&-b&a
+ \end{pmatrix}
+\]
+The identities $2a^2+2b^2=1$ and $a^2-2ab-b^2=0$ give $UU^t=I$.
+Multiplication gives $S^tU$ symmetric, proving criticality. We have
+$L(U)=8(a+b)=4\sqrt{2+\sqrt2}$. The imaginary column rotation in
+Lemma~\ref{realup} increases $L$. Along a real rotation of the same columns the
+signs are locally constant, so the pair contributes $C\cos t+D\sin t$
+with $C>0$ and $D=0$ by criticality. This gives a decrease.
+
+For the highest observed nonflat level, use a bordered circulant matrix.
+For $0<x<1$ write $s=\sqrt{1-x^2}$ and take the corner entry $x$, with
+3 equal entries $s/\sqrt3$ along both borders. Take the inner block
+circulant, with successive right shifts of the row
+\[
+ c_j(x,t)=\frac{-x+2i\sin(t+2\pi j/3)}{3},\qquad j=0,1,2
+\]
+The border and constant mode carry the block
+$\left(\begin{smallmatrix}x&s\\s&-x\end{smallmatrix}\right)$.
+The 2 nonconstant Fourier eigenvalues have modulus 1, since the sine
+expands into the modes $e^{it}$ and $-e^{-it}$. This proves unitarity.
+At $t=0$ the norm is
+\[
+ F(x)=2x+2\sqrt3\sqrt{1-x^2}+2\sqrt{x^2+3}
+\]
+We have $F''(x)=-2\sqrt3/(1-x^2)^{3/2}+6/(x^2+3)^{3/2}<0$.
+The derivative is positive at zero and tends to $-\infty$ at 1, giving
+a unique zero $x_0=0.6096097890\ldots$ and $F(x_0)=7.6376151868\ldots$.
+
+To verify stationarity on all of $U_4$, both $S$ and $U$ at $t=0$
+are self-adjoint and diagonal on the 2 nonconstant modes. On the
+border and constant mode $S$ has diagonal entries $1,v$ and off-diagonal
+entries $\sqrt3$, where $v=-1-2x/\sqrt{x^2+3}$. The 2 off-diagonal
+entries of $S^*U$ differ by $s(1-v)-2\sqrt3 x=sF'(x)$, which vanishes
+at $x_0$. Thus $S^*U$ is self-adjoint.
+
+The $x$-direction decreases the norm. In the $t$-direction the varying
+part of the norm is $\sum_{j=0}^2\sqrt{x^2+4\sin^2(t+2\pi j/3)}$.
+Putting $r=\sqrt{x^2+3}$, its second derivative at zero is
+\[
+ \frac4x-\frac4r-\frac6{r^3}
+ =\frac{6(r-x)(2r+x)}{xr^3(r+x)}>0
+\]
+This proves the saddle assertion independently of numerical Hessian
+diagonalization. The 2 intermediate levels in the numerical table remain uncertified as exact critical values.
+The 2 representatives are matched by \texttt{models.py};
+\texttt{three\_lines.py} also checks the block variation and certifies
+column curvature $M_{23}\in(0.6092,0.6094)$,
+row curvature $M_{14}\in(-0.6677,-0.6674)$ and block-curve curvature
+in $(1.4478,1.4480)$ on partition $12\mid34$ for this calibration. Thus the singleton rows
+of a 3-line pair need not themselves give an increase.
+
+\subsection{Numerical evidence and its limits}\label{foursearch}
+A useful bound separates potential local maxima from the nonsmooth
+boundary. We use Frobenius-unit generators as in Lemma~\ref{twocol}.
+
+\begin{prop}\label{entrybound}
+At a local maximum on $U_N$, $N\ge2$, every entry has modulus at least
+\[
+ b_N=\sqrt{N(N-1)^2+1}-(N-1)\sqrt N
+\]
+In particular, $b_4=\sqrt{37}-6$ and $b_5=9-4\sqrt5$.
+\end{prop}
+\begin{proof}
+For an entry of modulus $p$, choose a partner of modulus $q$ in its row
+with $q^2\ge(1-p^2)/(N-1)$. Choose the phase of the generator in Lemma~\ref{twocol} to agree with
+$h_i$ in the selected row. Its contribution to the first
+term of the curvature is then $(q^2/p+p^2/q)/2$. Each column has
+$1$-norm at most $\sqrt N$, giving
+\[
+ M_{jk}\ge\frac{q^2}{2p}-\sqrt N
+ \ge\frac{1-p^2}{2(N-1)p}-\sqrt N
+\]
+At a local maximum $M_{jk}\le0$. Solving the resulting quadratic
+inequality gives the bound.
+\end{proof}
+
+We use the diagnostics
+\[
+ g(U)=\frac12\|S^*U-U^*S\|_F,\qquad
+ d(U)=\max_{ij}\big||U_{ij}|-1/2\big|
+\]
+2 Apple M3 laptops (8 GB, 3 workers each)
+ran 7-hour campaigns, with seeds $421701,421702$. Ascent uses Haar
+starts, geodesic gradient steps and Armijo backtracking, capped at
+$1800$ iterations. Stationary search uses damped least squares for
+$(S^*U-U^*S)/(2i)=0$. 4 protocols start from Haar, phase-polar,
+near-real and near-flat matrices; 4 first steer Haar matrices towards
+$L\le c$, $c\in\{7.40,7.65,7.90,7.995\}$, with at most $24$ steering
+and $120$ root steps.
+
+The tolerances are $d\le10^{-6}$ for flatness, $g\le10^{-12}$ for
+stationarity, and $10^{-8}$ for near-zero entries. At accepted nonflat
+returns both full and 9-dimensional horizontal Hessians are checked;
+top horizontal eigenvalue at most $10^{-7}$ triggers a candidate flag.
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Endpoint status & Ascent & Stationary\\
+\midrule
+Numerically flat &83\,009\,628&19\,409\,961\\
+Nonflat with positive curvature &0&26\,672\,800\\
+Near zero &0&6\,126\,915\\
+Unresolved &67\,268&27\,748\\
+\midrule
+Total &83\,076\,896&52\,237\,424\\
+\bottomrule
+\end{tabular}
+\end{center}
+There were no candidate, unlisted-level, numerical-error or
+unitarity-error flags. All nonflat stationary returns had $L$ within
+$2\cdot10^{-6}$ of one of the following 4 values. Repeated visits
+to equivalent matrices are included in the counts.
+\begin{center}
+\begin{tabular}{rrr}
+\toprule
+$L$ (rounded) & Returns & Minimum top horizontal eigenvalue\\
+\midrule
+7.391036 &6\,764\,846 &2.2961006\\
+7.633239 &9\,497\,039 &2.8149691\\
+7.633377 &7\,875\,896 &2.6601070\\
+7.637615 &2\,535\,019 &2.8768867\\
+\bottomrule
+\end{tabular}
+\end{center}
+Every unresolved ascent endpoint satisfies
+$d\le6.01386943033244\cdot10^{-6}$; not all were continued, so this
+does not assert convergence of every trajectory. For stationary returns,
+\[
+ \max_{\text{unresolved }U}\min_{ij}|U_{ij}|
+ =5.6974893208468939\cdot10^{-7}
+\]
+All unresolved and near-zero stationary endpoints thus fall far below
+$\sqrt{37}-6=0.08276\ldots$. This comparison has a large numerical
+margin but is not an interval certificate for the entire campaign.
+
+The initial $8192$-start survey gave $3596$ nonflat uphill, $4002$
+near-flat, $589$ near-zero and $5$ unresolved returns. The 4 nonflat
+groups have numerical positive indices $3,3,2,1$. For every nonflat
+return, interval arithmetic proves a recorded pair curvature exceeds
+$0.60$ throughout its coordinate box of radius $10^{-8}$. This excludes
+local maxima in the boxes without proving existence or uniqueness of
+critical points there. The other $594$ endpoints have a smallest entry
+at most $1.18\cdot10^{-8}$. A separate $1024$-start polar-ascent control
+reached numerical flatness, including $11$ final least-squares refinements.
+
+The compact archives retain all $95\,016$ unresolved overnight endpoints,
+aggregate counts and extrema, and representative outputs. Independent
+audits recheck $99\,164$ retained endpoints and all $98\,914$ stored
+spectrum pairs. The sources are \texttt{search.py} and \texttt{audit.py} for the initial
+survey and its certificates, and \texttt{ahc\_ascent.py} and
+\texttt{ahc\_stationary.py} for the campaigns. \texttt{compact.py}
+exports and verifies their archives; \texttt{audit\_compact.py}
+recomputes all retained diagnostics. The archives contain their exact
+generating sources and complete aggregate counts, but ordinary discarded
+endpoints are unavailable.
+These searches sample basins, not stationary points uniformly; repeated
+visits are not independent evidence of completeness. No covering of
+$U_4$ is claimed, and an unvisited basin remains possible.
+
+\section{Order 5: exact models and gradient geometry}\label{fivegeometry}
+\subsection{A saddle invisible to pair tests}
+The order-5 search needs the full Hessian. Its main calibration
+shows why pair rotations alone cannot decide local maximality.
+For $0<x<1$, put
+\[
+ a=(1+x)/4,\qquad b=\sqrt{1-x^2}/2,\qquad c=(1-x)/4
+\]
+Let $U(x)$ have corner entry $x$, 4 entries $b$ on each border, and
+an inner circulant block whose first row is
+\[
+ (-a,\ c-i/2,\ -a,\ c+i/2)
+\]
+The other inner rows are successive right shifts. On the border and
+normalized constant inner vector, $U(x)$ acts by
+\[
+ \begin{pmatrix}x&\sqrt{1-x^2}\\\sqrt{1-x^2}&-x\end{pmatrix}
+\]
+Its other Fourier eigenvalues are $1,-1,-1$, in an appropriate order.
+Thus $U(x)$ is self-adjoint and unitary. Counting moduli gives
+\[
+ F(x)=L(U(x))=2+3x+4\sqrt{1-x^2}+2\sqrt{(1-x)^2+4}
+\]
+Full criticality reduces here to the scalar equation $F'(x)=0$.
+
+\begin{prop}\label{fivecalibration}
+There is a unique $x_0\in(0,1)$ for which $U_0=U(x_0)$ is critical on
+$U_5$. At $U_0$ every $2$-row and $2$-column orbit has a strict local
+maximum modulo phases, but a $3$-column variation increases $L$.
+The full Hessian has inertia $(15,9,1)$.
+\end{prop}
+\begin{proof}
+Both $U(x)$ and its phase matrix $S$ are self-adjoint and diagonal on the
+nonconstant inner Fourier modes. On the remaining 2-dimensional
+space write
+\[
+ S=\begin{pmatrix}1&2\\2&v\end{pmatrix},\qquad
+ v=-2+\frac{2(1-x)}{\sqrt{(1-x)^2+4}}
+\]
+The difference of the off-diagonal entries of $S^*U$ is
+$\sqrt{1-x^2}(1-v)-4x=\sqrt{1-x^2}F'(x)$. Hence full criticality is
+equivalent to $F'(x)=0$. We have
+\[
+ F'(x)=3-\frac{4x}{\sqrt{1-x^2}}-
+                 \frac{2(1-x)}{\sqrt{(1-x)^2+4}}
+\]
+Its derivative is
+\[
+ F''(x)=-\frac4{(1-x^2)^{3/2}}
+             +\frac8{((1-x)^2+4)^{3/2}}<0
+\]
+Since $F'(0)>0$ and $F'(x)\to-\infty$ as $x\to1$, the root is unique.
+It is $x_0=0.5374606822272723\ldots$, with $L(U_0)=11.0911152536\ldots$.
+
+Index the border by $0$ and the inner coordinates by $1,2,3,4$.
+Cyclic symmetry leaves 3 column-pair types; self-adjointness gives the
+same row tests. Lemmas~\ref{variations} and~\ref{twocol}, evaluated with
+outward rounding, give
+\begin{center}
+\begin{tabular}{lc}
+\toprule
+Direction & Curvature enclosure\\
+\midrule
+Border--inner pair & $-0.8502450<M_{01}<-0.8502447$\\
+Adjacent inner pair & $-0.3694043<M_{12}<-0.3694040$\\
+Opposite inner pair & $-0.1978585<M_{13}<-0.1978582$\\
+3-column generator $B$ & $0.5674395<Q_{U_0}(B)<0.5674400$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Here $B$ is self-adjoint with $B_{12}=B_{23}=i$, and all other upper and
+diagonal entries zero. Its Frobenius norm is $2$. The pair bounds are
+for unit generators. The negative pair bounds and positive 3-column
+bound prove the local assertions.
+
+For the full inertia take $E_{jk}+E_{kj}$ and $i(E_{jk}-E_{kj})$,
+in that order, on the first 8 pairs $j<k$ in lexicographic order. Polarizing $Q$
+gives a $16\times16$ symmetric matrix. Put
+$l=0.53746068222727233271039478$. Endpoint signs enclose $x_0$ in
+$[l,l+10^{-26}]$. Interval elimination by congruence in the indicated
+order gives pivot $14$ in $(1.58,1.59)$ and the other 15 pivots in
+$(-3.02,-0.07)$. These 16 nonzero directions, together with the
+9 phase zero modes, exhaust the tangent space. The root signs,
+curvature bounds and elimination are reproduced by \texttt{code011/check.py}.
+\end{proof}
+
+\subsection{Further calibrations and bordered circulants}
+The 4 original decimal seeds in \texttt{check.py} give the following
+numerical refinements; inertias use zero threshold $10^{-6}$.
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Seed & $L/(N\sqrt N)$ & Inertia & Top curvature & Best pair\\
+\midrule
+First $N=5$ & .99109 & $(14,9,2)$ & .32297 & $-.26412$\\
+Second $N=5$ & .99202 & $(15,9,1)$ & .65312 & $-.19786$\\
+$N=6$ & .98832 & $(22,11,3)$ & .65004 & $-.02548$\\
+$N=7$ & .96837 & $(27,13,9)$ & 2.49105 & $+.24721$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Polar projection and horizontal Newton refinement give residuals below
+$10^{-14}$. Positive-curvature witnesses are separately interval-certified
+on all 4 original coordinate boxes of radius $10^{-10}$.
+For the second seed, row order $(5,1,2,4,3)$, column order $(2,1,3,4,5)$
+and dephasing recover $U_0$ to $2\cdot10^{-15}$.
+For the first, orders $(3,1,4,2,5)$ and $(2,3,5,4,1)$ give a symmetric
+matrix invariant under simultaneous $(2\,3)(4\,5)$, to $3\cdot10^{-14}$.
+If its positive eigenvalues are $u,v$ and negative ones $-a_j$, a
+Frobenius-isotropic Gaussian direction has predicted uphill probability
+$2.67\cdot10^{-6}$. It is the angular mean of
+$\prod_j(1+a_j/d)^{-1/2}$, where $d=u\cos^2\theta+v\sin^2\theta$;
+condition on the positive-plane radius, whose square is exponential of
+mean 2. This explains why random direction tests can miss a saddle.
+
+For $N=6$, column order $(4,2,6,5,1,3)$ and dephasing give symmetry to
+$3\cdot10^{-15}$. 9 of 20 column triples have positive curvature;
+the best is $.32062$ on original columns $(1,4,6)$. On that triple,
+the self-adjoint generator with upper entries $(1-i,1+i,-1+i)$ has
+$1.0604779<Q<1.0604782$ on the original rounding box.
+For $N=7$, columns $(2,7)$ already give an increase. No exact
+order-6 or order-7 critical model is asserted.
+
+More generally, a border $x,\sqrt{1-x^2}/\sqrt m$ and circulant core
+with Fourier eigenvalues $-x,z_1,\ldots,z_{m-1}$, $|z_k|=1$, give a
+unitary of order $m+1$. At full support, $0<x<1$, stationarity in $x$
+and all these phases is equivalent to full criticality: if the
+phase eigenvalues of the core are $v_k$, phase stationarity makes
+$\bar v_kz_k$ real for $k>0$; reality of $Tr(S^*U)$ then makes $v_0$
+real, and the remaining skew entry is $\sqrt{1-x^2}\,\partial_x L$.
+Restricted phase searches alone do not give this conclusion.
+
+\subsection{The actual unstable branches}
+Return to the exact order-5 model $U(x)$ from
+Proposition~\ref{fivecalibration}. Replace its inner row by
+\[
+ (-a+\frac i2\sin t,\ c-\frac i2\cos t,
+  -a-\frac i2\sin t,\ c+\frac i2\cos t)
+\]
+to obtain $U(x,t)$. Its nonconstant Fourier eigenvalues are
+$e^{it},-1,-e^{-it}$. Put
+$A=(a^2+\sin^2t/4)^{1/2}$, $C=(c^2+\cos^2t/4)^{1/2}$ and
+$H(x,t)=x+4\sqrt{1-x^2}+8(A+C)$.
+This surface is the local common fixed set of
+$V\to PVP^{-1}$ and $V\to\bar V P^2$, where $P$ cycles the
+4 inner coordinates. The first equation gives a circulant block;
+the second makes the border block real and imposes the 3 displayed
+Fourier phases. Both maps preserve $L$, so its gradient is tangent to
+the surface. The induced metric and gradient equations are
+\[
+ \frac{2\,dx^2}{1-x^2}+2\,dt^2,\qquad
+ \dot x=\frac{1-x^2}{2}H_x,\quad \dot t=\frac12H_t,
+ \quad H_t=\sin(2t)(1/A-1/C)
+\]
+A fixed-corner $t$-rotation is a different curve: its corner stays
+$x_0$, and it cannot become flat. Starting exactly at $U_0$ also gives
+no motion. The proposition concerns the actual nonconstant gradient
+trajectories with backward limit $U_0$.
+
+\begin{prop}\label{branches}
+The $2$ unstable branches through $U_0$ for gradient ascent converge to
+$U(1/\sqrt5,\pm t_*)$, where $t_*=\frac12\arccos(1/\sqrt5)$.
+Both limits are Fourier-equivalent.
+\end{prop}
+\begin{proof}
+The restricted Hessian has opposite signs in $x,t$, and the full
+horizontal Hessian has exactly 1 positive eigenvalue. The unstable
+manifold theorem \cite{T}, on the phase quotient, therefore identifies
+these 2 surface branches with the full unstable branches. Equivariance
+and the trivial effective phase stabilizer fix their lifts through $U_0$.
+
+Consider the positive branch in $0<x<1$, $0<t<\pi/2$.
+On the boundary, $H\le F(x_0)$: the $t=0$ edge is $F(x)$, the
+$t=\pi/2$ edge has a larger $|A^2-C^2|$ with the same sum, and
+on $x=0,1$ use
+\[
+ H\le G(x):=x+4\sqrt{1-x^2}+4\sqrt{3+x^2},\quad
+ G(0)=4+4\sqrt3,\quad G(1)=9<F(1/2)
+\]
+Here also $G(0)<F(1/2)=7/2+2\sqrt3+\sqrt{17}$.
+The branch has strictly larger value than $F(x_0)$ and is trapped in
+a compact interior superlevel set. Every forward limit point is
+critical. Interior criticality gives $A=C$, hence $\cos(2t)=x$, and
+then $G'(x)=0$. Since $G''<0$, the unique solution is $x=1/\sqrt5$.
+Reflection treats the other branch. At the positive limit, the inner
+row of $\sqrt5U$ is $(w^2,w^4,w^3,w)$ with $w=e^{2\pi i/5}$;
+its cyclic shifts form the Fourier multiplication table, with row order
+$(2,1,3,4)$ and column order $(1,2,4,3)$. The negative limit is its adjoint.
+\end{proof}
+
+\section{Order 5: numerical evidence and certification}\label{fivecampaign}
+\subsection{The 7-hour campaigns}
+The standalone \texttt{ahc5\_ascent.py} and
+\texttt{ahc5\_stationary.py} check the full $25$-dimensional
+Hessian and its $16$-dimensional horizontal restriction at accepted
+nonflat stationary returns. They use flatness tolerance $10^{-6}$,
+stationarity tolerance $10^{-10}$, near-zero threshold $10^{-7}$ and
+positive-curvature threshold $10^{-7}$. Up to $80$ polishing steps
+target residual $10^{-12}$. Ascent uses Haar, phase-polar,
+Haar-polar, near-real, near-block and near-saddle starts, with at most
+$1600$ steps. The stationary search uses Haar, phase-polar, near-real,
+near-flat, near-saddle, near-block, bordered and circulant starts, and
+4 steering caps $L/(5\sqrt5)\le .90,.95,.985,.999$, with at most
+$32$ steering and $160$ root steps. The algorithms passed the derivative,
+calibration and restart checks in \texttt{test\_ahc5.py}.
+2 Apple M3 laptops (8 GB, 3 workers each)
+completed 7-hour runs, with seeds $521811,521812$:
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Endpoint status & Ascent & Stationary\\
+\midrule
+Numerically near flat &181\,164\,464&2\,402\,576\\
+Nonflat with positive curvature &0&18\,997\,063\\
+Near zero &0&1\,129\,156\\
+Unresolved &0&404\,581\\
+\midrule
+Total &181\,164\,464&22\,933\,376\\
+\bottomrule
+\end{tabular}
+\end{center}
+There were no candidate, uncertain-Hessian or numerical-error flags.
+Every ascent endpoint satisfied
+$\max_{ij}\big||U_{ij}|-1/\sqrt5\big|<10^{-6}$.
+The smallest recorded top curvature at a nonflat stationary return was
+$0.206350429\ldots$; all such returns had residual below $10^{-12}$.
+The earlier 5-minute local pilots gave $593\,024$ near-flat ascent
+returns and $105\,248$ stationary returns: $10\,996$ near-flat,
+$87\,250$ uphill, $5162$ near-zero and $1840$ unresolved. They are
+separate runs; their $3840$-start test prefixes are not counted again.
+
+One retained numerical critical point has $L=11.081082511058\ldots$,
+top Hessian eigenvalue $0.206350429\ldots$, and largest row or column
+pair curvature $-0.226683\ldots$. Its numerical inertia is again
+$(15,9,1)$. An independent interval check proves
+\[
+ 0.20635<Q_V(B)<0.20636
+\]
+for a fixed rational self-adjoint generator throughout the coordinate box
+of radius $10^{-12}$ around the stored matrix. This excludes every
+unitary in the box as a local maximum. Theorem~\ref{criticalcatalogue}
+certifies an exact critical point near the representative of group $39$,
+with this inertia and negative pair curvatures. The matrix and witness are in
+\texttt{code011/data/ahc5-weak.json}, and the check is \texttt{code011/weak5.py}.
+
+The near-zero returns lie below $b_5=9-4\sqrt5>0.0557$ and hence
+cannot themselves be local maxima. The unresolved returns have
+residual at least $1.254\cdot10^{-5}$, with smallest-entry moduli
+reaching $0.1539657$; the entry bound does not dismiss all of them.
+All $288$ retained unresolved endpoints have numerically positive
+geodesic curvature, with smallest top value $3.67446\ldots$.
+The saved-point follow-up below explains these stalls. A subsequent
+partial replay addresses the original starting sequence; neither
+calculation asserts exhaustive coverage.
+
+The archives \texttt{code011/overnight5/ascent-mac.zip} and
+\texttt{stationary-mac.zip} contain the generating sources, all-run
+counters and extrema, and $96$ and $1076$ retained endpoints. Ordinary
+endpoints use bounded sampling, supplemented by priority pools for weak
+saddles and small unresolved residuals; every candidate flag would be
+retained. The 2 databases total $4\,460\,544$ bytes.
+\texttt{audit\_ahc5.py} rechecks source hashes, counters, starts and
+retained endpoints, including $452$ stored pairs of full and horizontal
+spectra and their uphill witnesses. Maximum spectral and witness
+discrepancies were below $6\cdot10^{-14}$. The audit also computes
+curvature at the retained unresolved points without refining them.
+The unretained endpoints cannot be audited individually from these archives.
+
+\subsection{Catalogue and systematic certificates}
+The $452$ retained nonflat stationary returns form $40$ numerical groups
+under row and column phases, permutations and complex conjugation, using
+Frobenius tolerance $10^{-6}$. The comparison checks all pairs of row
+and column permutations after dephasing; equal norms alone are not
+used as equivalence tests. The table gives each representative norm,
+its positive horizontal index $p$, and a lower bound $q$ for a fixed
+uphill direction throughout every retained rounding box in that group.
+Theorem~\ref{criticalcatalogue} certifies these indices and the displayed
+norms at exact critical points near the $40$ representatives.
+\begin{center}
+\begin{tabular}{rrrr@{\qquad}rrrr}
+\toprule
+Group & $L$ & $p$ & $q$ & Group & $L$ & $p$ & $q$\\
+\midrule
+1 & 9.779960 & 6 & 17.279 & 21 & 10.475603 & 6 & 3.673\\
+2 & 9.944272 & 6 & 3.572 & 22 & 10.475618 & 5 & 4.844\\
+3 & 10.204351 & 7 & 5.864 & 23 & 10.475618 & 5 & 4.844\\
+4 & 10.204611 & 6 & 4.582 & 24 & 10.475787 & 4 & 9.810\\
+5 & 10.204611 & 6 & 4.582 & 25 & 10.493467 & 4 & 8.293\\
+6 & 10.229297 & 6 & 6.638 & 26 & 10.599732 & 5 & 4.534\\
+7 & 10.231276 & 5 & 7.045 & 27 & 10.656854 & 5 & 6.094\\
+8 & 10.234788 & 5 & 3.557 & 28 & 10.658120 & 4 & 6.675\\
+9 & 10.252396 & 6 & 10.519 & 29 & 10.659153 & 4 & 7.120\\
+10 & 10.255519 & 6 & 3.761 & 30 & 10.662660 & 3 & 4.602\\
+11 & 10.264114 & 6 & 3.507 & 31 & 10.662660 & 3 & 4.602\\
+12 & 10.282845 & 6 & 4.288 & 32 & 11.000000 & 5 & 0.499\\
+13 & 10.283393 & 5 & 3.930 & 33 & 11.047758 & 4 & 0.539\\
+14 & 10.286257 & 5 & 6.297 & 34 & 11.048168 & 3 & 0.621\\
+15 & 10.290855 & 5 & 5.992 & 35 & 11.048247 & 2 & 0.652\\
+16 & 10.290855 & 5 & 2.989 & 36 & 11.061538 & 2 & 0.292\\
+17 & 10.322914 & 4 & 36.252 & 37 & 11.079258 & 3 & 0.740\\
+18 & 10.325913 & 4 & 6.172 & 38 & 11.080767 & 2 & 0.322\\
+19 & 10.334241 & 4 & 8.302 & 39 & 11.081083 & 1 & 0.206\\
+20 & 10.334241 & 4 & 8.302 & 40 & 11.091115 & 1 & 0.653\\
+\bottomrule
+\end{tabular}
+\end{center}
+For every one of the $452$ matrices, \texttt{catalogue5.py} rounds a
+self-adjoint uphill generator to 12 decimals and interval-evaluates
+$Q_U(B)$ on the real and imaginary coordinate box of radius $10^{-8}$.
+Every lower bound exceeds $.20634$. These are rigorous exclusions of
+local maxima among unitaries in the boxes. The grouping remains
+numerical; these box exclusions alone do not establish critical-root
+existence. That additional conclusion is proved below for the $40$
+representatives. No completeness of the catalogue is asserted.
+Representatives, matching
+permutations and individual certificates are in \texttt{data/catalogue5.npz}
+and \texttt{data/catalogue5.json}.
+
+Allowing transposition merges groups $4/5$, $19/20$, $22/23$ and $30/31$
+numerically, with matching errors below $6\cdot10^{-11}$, leaving $36$
+groups. Groups $15,16$ have norms agreeing to $12$ decimals,
+$L=10.290855136357$, but different smallest entry moduli,
+$0.109049\ldots$ and $0.211227\ldots$. These comparisons are also
+checked by \texttt{catalogue5.py}; exact equality of these 2 norms is not asserted.
+
+\subsection{Stalled stationary searches}\label{fivestalls}
+Write $R(U)=(S^*U-U^*S)/(2i)$ and $\Phi(U)=\|R(U)\|_F^2/2$.
+Restarting the residual solver on the $288$ saved points, with damping
+reset to $.01$ and up to $1600$ further steps, gives 3 outcomes:
+\begin{center}
+\begin{tabular}{rll}
+\toprule
+Count & Outcome & Diagnostic\\
+\midrule
+$139$ & Stationary saddles & $8$ at $L=10.475603$, $131$ at $L=10.475787$\\
+$134$ & Positive residual minimum & $L=10.2696684693$, $\|R\|_F=0.0164775744$\\
+$15$ & Near the zero-entry boundary & Smallest entry below $4.865\cdot10^{-7}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+All $139$ in the first group had exhausted the original $160$ steps
+and missed the polishing trigger $\|R\|_F<10^{-5}$. Restarting needs
+only $7$--$29$ steps, giving residual below $10^{-10}$ and top curvature
+above $3.67$. The $15$ boundary points already had an entry below
+$4.269\cdot10^{-5}$ before restarting, far below $b_5$.
+The $134$ middle returns agree with one matrix up to phases,
+permutations and conjugation within $10^{-6}$. At each, replace $U$ by
+\[
+ U\exp\big(-0.6iR(U)/\|R(U)\|_F\big)
+\]
+and allow $800$ root steps. All reach the known level
+$L=10.2641137511\ldots$, with top curvature above $3.50$ and residual
+below $10^{-10}$. Perturbations of lengths $.1$ and $.3$ returned to
+the residual minimum. The 3 final saddle
+types match already retained representatives within $10^{-6}$.
+These are numerical observations, reproduced by \texttt{stalled5.py},
+which saves the matrices, equivalences and witnesses in
+\texttt{data/stalled5.npz} and \texttt{data/stalled5.json}.
+The identity $\nabla\Phi=Hess(L)\nabla L$ explains how
+the residual can be stationary while $L$ is not. The positive minimum is certified in
+Proposition~\ref{residualminimum}.
+
+\subsection{Daytime follow-up and targeted search}\label{fivefollowup}
+The program \texttt{ahc5\_day\_replay.py} replays seed $521812$ with
+the original batches and solver. Unresolved full-support returns above
+$b_5-10^{-6}$ receive $320$ restart steps, then if necessary the
+length-$.6$ perturbation and up to $800$ root steps. Entry-bound
+exclusions and nonstationary positive curvature are counted separately.
+The complementary \texttt{ahc5\_day\_search.py}, seed $521819$, uses
+8 protocols: root search near all $40$ representatives, near the
+8 weakest, and along their soft directions; perturbed bordered and
+circulant starts; geodesic and polar ascent near weak saddles; and
+Haar root controls. Amplitudes range from $10^{-4}$ to $1$.
+Both jobs check full and horizontal Hessians and retain new signatures.
+
+Each Mac ran for 7 active hours with 2 workers and 1 BLAS thread per
+worker. Unresolved identifiers and diagnostics and all candidate flags
+are retained, with bounded pools for ordinary matrices. Data growth
+stops at $112$ MiB, below the $128$ MiB cap. Baseline replay, standalone
+launches, rollback, eigenbasis compatibility, locks and exact resumption
+are checked by \texttt{test\_day5.py}. The $18$-second release checks
+($5600$ replay and $10\,032$ targeted starts, no unresolved or candidate
+returns) are prefixes, not additional starts. The completed runs give
+the following counts; the lower block partitions the initial stalls
+already included above.
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Endpoint status & Replay & Targeted search\\
+\midrule
+Numerically near flat &1\,696\,013&10\,068\,469\\
+Nonflat stationary, positive curvature &13\,672\,742&24\,303\,512\\
+Small-entry exclusion &820\,253&579\,411\\
+Unresolved or candidate flags &0&0\\
+\midrule
+Total starts &16\,189\,008&34\,951\,392\\
+\midrule
+Initially unresolved &284\,297&235\,667\\
+Restart alone gives an uphill saddle &12\,306&15\,090\\
+Escape and refinement give an uphill saddle &248\,455&146\,623\\
+Excluded by the entry bound &23\,536&73\,954\\
+\bottomrule
+\end{tabular}
+\end{center}
+No uncertain-Hessian, unitarity or numerical-error flags occurred.
+Replay covers $70.59\%$ of the original $22\,933\,376$ starts;
+$6\,744\,368$ remain unvisited, so resolution of all $404\,581$
+original stalls is not claimed. Its $284\,297$ stalls are those observed
+on replay, and neither replay nor follow-up iterates add independent trials.
+All $8\,737\,840$ targeted ascent returns are near flat. Every accepted
+nonflat stationary return matches a stored signature, using sorted
+moduli and horizontal spectra within $2\cdot10^{-5}$; both runs
+encounter all $40$, with no new signature and least top curvature
+$0.206350429\ldots$. Signature matching is screening, not an
+equivalence proof or interval certificate.
+
+The unchanged archives \texttt{code011/daytime/replay-mac.zip} and
+\texttt{search-mac.zip} contain $788$ and $569$ retained runs, with
+starting, raw and final matrices. Database sizes are $31.94,26.03$ MiB;
+sums of parent and worker peak memory are $128.5,157.2$ MiB.
+The program \texttt{audit\_day5.py} checks hashes, database integrity,
+counters, retained matrices and $452+356$ full/horizontal spectrum
+pairs and uphill witnesses. Polarization independently checks each
+full Hessian; all spectral and witness errors are below $6\cdot10^{-14}$.
+The adjacent \texttt{replay-mac-audit.json} and
+\texttt{search-mac-audit.json} record these checks, which do not audit
+unretained matrices.
+
+All $788$ saved replay starts and $496$ targeted starts regenerate
+within $10^{-11}$. The other $67$ soft-direction and $6$ ascent starts
+depend on eigenbasis choices. Recover $B=-i\log(U_0^*U)$ from the saved
+start $U$ and catalogue centre $U_0$. For a soft start of length $\rho$,
+Gaussian coefficients $c_1,c_2,c_3$ and selected eigenvalues
+$\lambda_1,\lambda_2,\lambda_3$, the audit checks
+\[
+ \|P_\lambda B\|_F^2
+ =\rho^2\frac{\sum_{a:\lambda_a=\lambda}c_a^2}
+                   {\sum_{a=1}^3c_a^2}
+\]
+Here $P_\lambda$ is the horizontal Hessian eigenspace projection;
+eigenvalues within $10^{-7}$ are grouped. For ascent starts it checks
+$B=\rho(W+.1E)/\|W+.1E\|_F$, where $E$ is the regenerated noise
+and $W$ a unit vector in the top eigenspace. Relative norm and
+projection discrepancies are below $2\cdot10^{-12}$. These are
+numerical compatibility checks, not identical regeneration across
+numerical libraries; saved starts and generating sources are unchanged.
+
+\subsection{A positive minimum of the stationarity residual}
+The following certificate explains the middle group in
+Section~\ref{fivestalls}. It establishes an obstruction to residual
+minimization, without producing a local maximum of $L$.
+
+\begin{prop}\label{residualminimum}
+On $U_5$, $\Phi$ has a strict local minimum modulo row and column phases
+at a full-support point $V$ satisfying
+\[
+ .01647<\|R(V)\|_F<.01649
+\]
+In particular, this point is not stationary for $L$.
+\end{prop}
+\begin{proof}
+The following integer matrix specifies a rational self-adjoint matrix $A$:
+put $A_{jj}=10^{-12}C_{jj}$ and
+$A_{jk}=10^{-12}(C_{jk}+iC_{kj})$ for $j<k$.
+\[
+\setlength{\arraycolsep}{3pt}
+C=\begin{pmatrix}
+495152000271&190465601450&-262733011052&-124814484784&-323386252325\\
+-377050587335&-448869470372&70859178042&-55846027846&1182451590433\\
+585209765500&-541232190289&464444926073&60765711274&-107072278033\\
+74541284483&-126095931572&461662797924&455696731011&445244851191\\
+48142427836&-53078770252&237226558258&964201483854&-530101168667
+\end{pmatrix}
+\]
+From the 20 matrices $E_{jk}+E_{kj},i(E_{jk}-E_{kj})$, ordered
+lexicographically by $j<k$, omit the real directions $(1,3),(2,3),(4,5)$
+and the imaginary direction $(2,5)$. Call the remaining matrices
+$B_1,\ldots,B_{16}$. On the cube $|x_k|\le10^{-10}$ put
+\[
+ W=(I-i(A+\sum_k x_kB_k))^{-1},\qquad V(x)=2W-I
+\]
+Put $F(x)=\Phi(V(x))$ and $H(x)=D^2F(x)$.
+This parametrization is exactly unitary. Differentiation uses
+$V_j=2iWB_jW$ and
+$V_{jk}=-2W(B_jWB_k+B_kWB_j)W$.
+The interval computation in \texttt{stalled5.py}, at $40$ decimal digits,
+constructs rational matrices $Y,P$ and verifies throughout the cube
+\[
+ \|Y\nabla F(0)\|_\infty<7\cdot10^{-13},\qquad
+ \|I-YH(x)\|_\infty<.077,\qquad
+ \|P^tH(x)P-I\|_\infty<.075
+\]
+Here $Y$ approximates the inverse midpoint Hessian and $P$ the inverse
+transpose Cholesky factor, with entries rounded to 16 significant
+decimals. The map $x-Y\nabla F(x)$ contracts the cube strictly into
+itself, so it has a unique interior fixed point; $H$ is positive definite.
+The 16 chart tangents and 9 phase tangents are independent:
+for their real $25\times25$ coordinate matrix $T(x)$, a rational
+preconditioner $Z$ gives $\|I-ZT(x)\|_\infty<2.2\cdot10^{-5}$.
+Thus the chart is transverse to the phase orbits. Finally the same
+intervals give $\min|V(x)_{ij}|>.1273$ and the displayed bounds on
+$\|R(V(x))\|_F$. Phase invariance proves the asserted strict local
+minimum modulo phases.
+\end{proof}
+
+\subsection{Certified critical points}\label{criticalpoints}
+We finish by validating the critical points behind the catalogue.
+The certificate concerns local existence, uniqueness and inertia;
+the numerical grouping is not used to infer completeness or pairwise
+inequivalence of all $40$ entries.
+
+\begin{thm}\label{criticalcatalogue}
+Each of the $40$ catalogue representatives is within $10^{-7}$ in
+Frobenius norm of a full-support critical point of the $1$-norm on $U_5$.
+This point is locally unique modulo row and column phases, and its
+full Hessian has inertia
+\[
+ (16-p,9,p)
+\]
+where $p$ is the positive index listed in the table. Its norm rounds
+to the displayed value. In particular, the $1$-norm has at least $35$
+distinct nonflat critical values. For group $39$, all row and column
+pair curvatures are less than $-.22$.
+\end{thm}
+\begin{proof}
+The rational chart data are listed in \texttt{data/critical5-input.json}.
+For each representative an integer matrix $C$ defines a self-adjoint
+matrix $A$ by $A_{ii}=10^{-20}C_{ii}$ and
+$A_{ij}=10^{-20}(C_{ij}+iC_{ji})$ for $i<j$.
+The record selects $16$ matrices $B_a$ from the canonical basis of
+$5$ diagonal matrices, followed by $E_{jk}+E_{kj},i(E_{jk}-E_{kj})$
+for $j<k$ in lexicographic order. Its indices start at $1$.
+On the cube $|x_a|\le r=10^{-12}$ put
+\[
+ W(x)=\left(I-i\left(A+\sum_a x_aB_a\right)\right)^{-1},\qquad
+ V(x)=2W(x)-I,\qquad f(x)=L(V(x))
+\]
+This is an exactly unitary chart. The record also gives an integer
+$k\in[-16,16]$ and the unit scalar $z=(4+ik)/(4-ik)$.
+Interval bounds throughout the cube give
+\[
+ \min_{ij}|V(x)_{ij}|>.016,\qquad
+ f(x)<11.1<5\sqrt5,\qquad
+ \|V(x)/z-U^{(0)}\|_F<10^{-7}
+\]
+Here $U^{(0)}$ is the corresponding stored representative. Thus all
+points in the chart have full support and are nonflat.
+
+The derivatives used by \texttt{critical5.py} are
+\[
+ V_a=2iWB_aW,\qquad
+ V_{ab}=-2W(B_aWB_b+B_bWB_a)W
+\]
+Writing $m_{ij}=|V_{ij}|$ and
+$t_{a,ij}=Re(\overline{V_{ij}}(V_a)_{ij})$, these give
+\[
+ f_a=\sum_{ij}\frac{t_{a,ij}}{m_{ij}},\qquad
+ f_{ab}=\sum_{ij}\left(
+ \frac{Re\big(\overline{(V_a)_{ij}}(V_b)_{ij}
+                   +\overline{V_{ij}}(V_{ab})_{ij}\big)}{m_{ij}}
+ -\frac{t_{a,ij}t_{b,ij}}{m_{ij}^3}\right)
+\]
+Put $H(x)=D^2f(x)$. At $50$ decimal digits, interval arithmetic
+verifies the following bounds for all $40$ charts:
+\[
+ \|Y\nabla f(0)\|_\infty<10^{-20},\qquad
+ \|I-YH(x)\|_\infty<.002,\qquad
+ \|P^tH(x)P-D\|_\infty<.001
+\]
+Here $Y,P$ are rational matrices, proposed by midpoint inversion and
+diagonalization and rounded to $17$ significant digits. The diagonal
+matrix $D$ has $16-p$ entries $-1$ and $p$ entries $1$.
+The first 2 bounds make $x-Y\nabla f(x)$ a contraction of the cube
+strictly into itself, with a unique zero of $\nabla f$.
+The third fixes the inertia of $H$ by congruence and a nonsingular
+homotopy to $D$; numerical eigenvalue signs alone are not used as proof.
+
+To pass to full criticality, form the real $25\times25$ coordinate
+matrix $T(x)$ of the $16$ self-adjoint tangent generators $-iV^*V_a$,
+the $5$ generators $E_{jj}$, and the $4$ generators $V^*E_{jj}V$
+with $j<5$. Coordinates are diagonal entries followed by real and
+imaginary parts of upper entries. A rational preconditioner gives
+\[
+ \|I-ZT(x)\|_\infty<10^{-6}
+\]
+Thus the chart is transverse to the phase orbits. Phase invariance
+turns its critical point into a critical point on $U_5$, locally unique
+modulo phases. At that point the $9$ phase directions lie in the full
+Hessian kernel, while its restriction to the chart has the certified
+nondegenerate inertia. This proves the stated full inertia.
+
+Finally, the norm enclosure for each chart lies strictly within
+$5\cdot10^{-7}$ of the displayed value. The table contains $35$
+different such values, whose open rounding intervals are disjoint.
+For group $39$, interval evaluation of Lemma~\ref{twocol} on $V(x)$
+and its transpose bounds all $20$ pair curvatures above by $-.22$.
+The individual checks and enclosures are recorded in
+\texttt{data/critical5.json} and reproduced by \texttt{critical5.py}.
+\end{proof}
+
+\phantomsection\addcontentsline{toc}{section}{References}
+\begin{thebibliography}{99}
+\setlength{\itemsep}{2pt}
+\setlength{\parsep}{0pt}
+\bibitem{AMS} P.-A. Absil, R. Mahony and R. Sepulchre,
+Optimization Algorithms on Matrix Manifolds, Princeton University
+Press (2008).
+\bibitem{AMM} G. Auberson, A. Martin and G. Mennessier,
+On the reconstruction of a unitary matrix from its moduli,
+\emph{Commun. Math. Phys.} \textbf{140} (1991), 417--437.
+\bibitem{BCS} T. Banica, B. Collins and J.-M. Schlenker,
+On orthogonal matrices maximizing the $1$-norm,
+\emph{Indiana Univ. Math. J.} \textbf{59} (2010), 839--856.
+\bibitem{BNp} T. Banica and I. Nechita, Almost Hadamard matrices:
+the case of arbitrary exponents, \emph{Discrete Appl. Math.}
+\textbf{161} (2013), 2367--2379.
+\bibitem{BN} T. Banica and I. Nechita, Almost Hadamard matrices with
+complex entries, \emph{Adv. Oper. Theory} \textbf{3} (2018), 137--177.
+\bibitem{BNS} T. Banica, I. Nechita and J.-M. Schlenker,
+Submatrices of Hadamard matrices: complementation results,
+\emph{Electron. J. Linear Algebra} \textbf{27} (2014), 197--212.
+\bibitem{BNZ} T. Banica, I. Nechita and K. \.Zyczkowski,
+Almost Hadamard matrices: general theory and examples,
+\emph{Open Syst. Inf. Dyn.} \textbf{19} (2012), 1250024.
+\bibitem{BKP} N. Bebiano, A. Kova\v{c}ec and J. da Provid\^encia,
+The validity of the Marcus--de Oliveira conjecture for essentially
+Hermitian matrices, \emph{Linear Algebra Appl.} \textbf{197--198}
+(1994), 411--427.
+\bibitem{BMP} N. Bebiano, J.K. Merikoski and J. da Provid\^encia,
+On a conjecture of G.N. de Oliveira on determinants,
+\emph{Linear Multilinear Algebra} \textbf{20} (1987), 167--170.
+\bibitem{BebN} N. Bebiano and H. Nakazato, Critical loci of the $4\times4$
+unistochastic map, DMUC Preprint 25-03 (2025).
+\bibitem{BP} N. Bebiano and J.P. da Provid\^encia,
+Revisiting the Marcus--de Oliveira conjecture,
+\emph{Mathematics} \textbf{13} (2025), 711.
+\bibitem{BEKTZ} I. Bengtsson, \AA. Ericsson, M. Ku\'s, W. Tadej and
+K. \.Zyczkowski, Birkhoff's polytope and unistochastic matrices,
+$N=3$ and $N=4$, \emph{Commun. Math. Phys.} \textbf{259} (2005), 307--324.
+\bibitem{BW} S. Brierley and S. Weigert, Maximal sets of mutually unbiased
+quantum states in dimension 6, \emph{Phys. Rev. A} \textbf{78} (2008), 042312.
+\bibitem{D} S.W. Drury, OMC for scalar multiples of unitaries,
+\emph{Linear Algebra Appl.} \textbf{422} (2007), 318--325.
+\bibitem{DZ} C. Dunkl and K. \.Zyczkowski, Volume of the set of
+unistochastic matrices of order 3 and the mean Jarlskog invariant,
+\emph{J. Math. Phys.} \textbf{50} (2009), 123521.
+\bibitem{F} M. Fiedler, Bounds for the determinant of the sum of
+Hermitian matrices, \emph{Proc. Amer. Math. Soc.} \textbf{30} (1971), 27--31.
+\bibitem{M} M. Marcus, Derivations, Pl\"ucker relations, and the numerical
+range, \emph{Indiana Univ. Math. J.} \textbf{22} (1973), 1137--1149.
+\bibitem{MM} J.I. Mulero-Mart\'inez, A variational framework for
+determinantal inequalities of normal matrices: successes and obstructions,
+\emph{Linear Algebra Appl.} \textbf{740} (2026), 19--38.
+\bibitem{O} G.N. de Oliveira, Normal matrices (research problem),
+\emph{Linear Multilinear Algebra} \textbf{12} (1982), 153--154.
+\bibitem{PB} J. da Provid\^encia and N. Bebiano, Matrices satisfying a
+conjecture of G.N. de Oliveira on determinants,
+\emph{Linear Algebra Appl.} \textbf{78} (1986), 187--198.
+\bibitem{RGZ} G. Rajchel, A. G\k{a}siorowski and K. \.Zyczkowski,
+Robust Hadamard matrices, unistochastic rays in Birkhoff polytope and
+equi-entangled bases in composite spaces,
+\emph{Math. Comput. Sci.} \textbf{12} (2018), 473--490.
+\bibitem{RKKZ} G. Rajchel-Mieldzio\'c, K. Korzekwa, Z. Pucha\l a and
+K. \.Zyczkowski, Algebraic and geometric structures inside the Birkhoff
+polytope, \emph{J. Math. Phys.} \textbf{63} (2022), 012202.
+\bibitem{R} K. Rodtes, A class of normal dilation matrices affirming the
+Marcus--de Oliveira conjecture, \emph{Oper. Matrices} \textbf{15} (2021), 127--130.
+\bibitem{TZguide} W. Tadej and K. \.Zyczkowski,
+A concise guide to complex Hadamard matrices,
+\emph{Open Syst. Inf. Dyn.} \textbf{13} (2006), 133--177.
+\bibitem{TZ} W. Tadej and K. \.Zyczkowski, Defect of a unitary matrix,
+\emph{Linear Algebra Appl.} \textbf{429} (2008), 447--481.
+\bibitem{T} G. Teschl, Ordinary Differential Equations and
+Dynamical Systems, Graduate Studies in Mathematics \textbf{140},
+American Mathematical Society (2012).
+\bibitem{ZKSS} K. \.Zyczkowski, M. Ku\'s, W. S\l omczy\'nski and
+H.-J. Sommers, Random unistochastic matrices,
+\emph{J. Phys. A} \textbf{36} (2003), 3425--3450.
+\end{thebibliography}
+\end{document}
