@@ -1,0 +1,15 @@
+{
+  "provenance": "Read-only SQL output pasted by Teo on 2026-11-17. These are supplied aggregates, not a new scan of his databases.",
+  "sql": "SELECT count(*) AS unresolved, max(flat_error) AS worst_flat_error, max(min_modulus) AS largest_min_entry FROM runs WHERE status='unresolved';",
+  "ascent": {
+    "unresolved": 67268,
+    "worst_flat_error": 6.01386943033244e-06,
+    "largest_min_entry": 0.499999451739434
+  },
+  "stationary": {
+    "unresolved": 27748,
+    "worst_flat_error": 0.4999999899999164,
+    "largest_min_entry": 5.697489320846894e-07
+  },
+  "status": "Both compact exports received and verified on 2026-11-18. All unresolved rows are retained; their extrema agree with these earlier terminal results. See archive-checks.json for the numerical recheck of every retained endpoint."
+}

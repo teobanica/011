@@ -1,0 +1,68 @@
+{
+  "utc": "2026-11-18T00:39:58.608972+00:00",
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "scope": "All retained starts and endpoints; all stored spectra. Floating-point checks only; discarded endpoints are not available.",
+  "archives": [
+    {
+      "archive": "ascent-compact.zip",
+      "archive_sha256": "0c3fdf6aca591e49d9eed8f9373713256070c5ec4b139164bea7745f51001ea5",
+      "source_runs": 83076896,
+      "retained_runs": 69316,
+      "retained_status_counts": {
+        "near_flat": 2048,
+        "unresolved": 67268
+      },
+      "spectra_recomputed": 69316,
+      "max_scalar_absolute_difference": {
+        "L": 0.0,
+        "gradient": 8.470329472543003e-22,
+        "min_modulus": 0.0,
+        "flat_error": 0.0,
+        "unitarity_error": 0.0
+      },
+      "max_spectrum_absolute_difference": {
+        "full": 5.329070518200751e-15,
+        "horizontal": 6.439293542825908e-15
+      },
+      "max_spectrum_difference_scaled_by_max_1_spectral_radius": {
+        "full": 2.664527472326958e-15,
+        "horizontal": 3.2196395375996865e-15
+      },
+      "max_start_unitarity_error": 2.4436386530534603e-15,
+      "max_endpoint_unitarity_error": 6.673645024605043e-13,
+      "result": "passed"
+    },
+    {
+      "archive": "stationary-compact.zip",
+      "archive_sha256": "a4656430a0f43bd969e32f2822022808ae437316db389a28d1deb7c2e01e0703",
+      "source_runs": 52237424,
+      "retained_runs": 29848,
+      "retained_status_counts": {
+        "nonflat_uphill": 1130,
+        "near_flat": 720,
+        "near_zero": 250,
+        "unresolved": 27748
+      },
+      "spectra_recomputed": 29598,
+      "max_scalar_absolute_difference": {
+        "L": 0.0,
+        "gradient": 2.7755575615628914e-17,
+        "min_modulus": 0.0,
+        "flat_error": 0.0,
+        "unitarity_error": 6.310887241768095e-30
+      },
+      "max_spectrum_absolute_difference": {
+        "full": 8.195638656616211e-08,
+        "horizontal": 9.685754776000977e-08
+      },
+      "max_spectrum_difference_scaled_by_max_1_spectral_radius": {
+        "full": 2.337217620527777e-15,
+        "horizontal": 2.3372176205277745e-15
+      },
+      "max_start_unitarity_error": 6.401676864292826e-15,
+      "max_endpoint_unitarity_error": 4.330499221214285e-14,
+      "result": "passed"
+    }
+  ]
+}
