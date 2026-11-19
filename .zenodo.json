@@ -8,21 +8,17 @@
       "name": "Banica, Teodor",
       "affiliation": "CY Cergy Paris Université",
       "orcid": "0000-0003-4680-0364"
-    }
-  ],
-  "contributors": [
-    {
-      "name": "Chat",
-      "type": "Researcher"
     },
     {
-      "name": "Grok",
-      "type": "Researcher"
+      "name": "Chat"
+    },
+    {
+      "name": "Grok"
     }
   ],
   "access_right": "open",
   "license": "MIT",
-  "version": "v1",
+  "version": "v2",
   "keywords": [
     "almost Hadamard conjecture",
     "complex Hadamard matrices",
