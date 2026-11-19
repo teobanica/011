@@ -2,7 +2,7 @@
 """Extract and verify a compact archive of a completed AHC overnight search.
 
 From either folder containing results.sqlite, run
-    python3 /path/to/project/code011/compact.py
+    python3 /path/to/ahc-7/code/compact.py
 The output is ascent-compact.zip or stationary-compact.zip beside the database.
 The source is opened read-only. Each retained database row is copied exactly.
 The archive contains all unresolved and exceptional runs, numerical extrema and

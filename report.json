@@ -1,0 +1,33 @@
+{
+  "format_version": 1,
+  "created_utc": "2026-11-18T00:32:50.665763+00:00",
+  "mode": "ascent",
+  "source_filename": "results.sqlite",
+  "source_size_bytes": 72646344704,
+  "source_runs": 83076896,
+  "retained_runs": 69316,
+  "first_run_id": 0,
+  "last_run_id": 83076895,
+  "contiguous_ids": true,
+  "batch_count": 5192306,
+  "config": {
+    "mode": "ascent",
+    "seed": 421701,
+    "batch_size": 16,
+    "sha256": "7923fe1d2e433e5fd1aad9c419ba17fa226a06b89af95e94ac156efdc2a81d17"
+  },
+  "totals": {
+    "near_flat": 83009628,
+    "unresolved": 67268
+  },
+  "unresolved": {
+    "count": 67268,
+    "worst_flat_error": 6.013869430332441e-06,
+    "largest_min_entry": 0.49999945173943433
+  },
+  "exception_rows_sha256": "7d570e4faac3c9d0b4a7c9c55181d216e2cb817f529cf2777d1a978ad854443c",
+  "ordinary_rows_sha256": "92bec66ccfbcd022d8b0c79b397456b14b2c9ef7e95d7e4e0a41a6949337affb",
+  "sample_seed": 421703,
+  "sample_requested": 2048,
+  "selection": "all unresolved/exceptional/unlisted runs; saved examples; first per group; sample"
+}
