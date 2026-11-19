@@ -1,0 +1,11 @@
+{
+  "run_id": 1001,
+  "coordinate_radius": "1e-12",
+  "B_rounding_decimal_places": 12,
+  "certified_curvature_bounds": [
+    "0.20635",
+    "0.20636"
+  ],
+  "meaning": "Every unitary in this entrywise real/imaginary box has a positive second variation; the numerical criticality and inertia are separate floating-point statements.",
+  "result": "passed"
+}

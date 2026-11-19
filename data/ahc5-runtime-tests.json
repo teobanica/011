@@ -1,0 +1,8 @@
+{
+  "lock_refused_concurrent_run": true,
+  "interrupt_saved": true,
+  "resume_added_exact_starts": 96,
+  "seed_mismatch_refused": true,
+  "share_archive_created": true,
+  "result": "passed"
+}

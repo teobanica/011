@@ -1,0 +1,2 @@
+L=7.39103626009029 Haar id=16 max entrywise distance after equivalences=1.85e-13
+L=7.63761518684038 Haar id=3 max entrywise distance after equivalences=1.31e-14

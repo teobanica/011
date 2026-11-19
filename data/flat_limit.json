@@ -1,0 +1,40 @@
+{
+  "arithmetic": "exact rational polynomial arithmetic in SymPy",
+  "leading_pair_roots": [
+    [
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      -1,
+      0
+    ],
+    [
+      1,
+      0,
+      -1
+    ],
+    [
+      0,
+      1,
+      -1
+    ]
+  ],
+  "leading_support": "At most two coefficients; support proof is in the manuscript.",
+  "different_rows_and_columns_obstruction": "-48*a*b*(a^2+b^2)",
+  "surviving_common_quartic": "32*(a^4+b^4)",
+  "scope": "C^2 modulus-only paths through J4 with nonzero first derivative; not a global AHC proof or a uniform neighborhood theorem.",
+  "result": "passed"
+}

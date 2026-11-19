@@ -1,0 +1,38 @@
+{
+  "checks": {
+    "ascent": {
+      "version": "ahc5-1",
+      "L": 11.091115253639936,
+      "gradient": 6.626079549732396e-17,
+      "inertia_full": [
+        15,
+        9,
+        1
+      ],
+      "top_horizontal": 0.6531240262137991,
+      "best_pair": -0.1978583447002289,
+      "fourier_top_horizontal": -0.772542485937367,
+      "max_jacobian_error": 1.848093900136405e-10,
+      "passed": true,
+      "source_sha256": "81b895a0da1f2ae8f789e6c9765efcd93895245e203a47a402020777759930e5"
+    },
+    "stationary": {
+      "version": "ahc5-1",
+      "L": 11.091115253639936,
+      "gradient": 6.626079549732396e-17,
+      "inertia_full": [
+        15,
+        9,
+        1
+      ],
+      "top_horizontal": 0.6531240262137991,
+      "best_pair": -0.1978583447002289,
+      "fourier_top_horizontal": -0.772542485937367,
+      "max_jacobian_error": 1.848093900136405e-10,
+      "passed": true,
+      "source_sha256": "189951c6b9ea172a8cec0f29fd353234a247df942bd691104e9b9a7f99ddd659"
+    }
+  },
+  "result": "passed",
+  "scope": "mathematical calibration, ascent, root recovery, all start families, bounded retention and reopening"
+}
